@@ -4,10 +4,14 @@ import scipy as sp
 import math
 import matplotlib.pyplot as plt
 
-def checkpotential(N,p):
+def checkpotential(N,p,rb):
   # N is number of sources, p is number of discretization points
   # on the equivalent and check surfaces
-
+  # length of box side is 2r
+  
+  # define constant about the check surface
+  d=0.1
+  
   # create sources in box, y
   sources = np.random.rand(N,2)
 
@@ -28,22 +32,23 @@ def checkpotential(N,p):
     zs[i] = z
 
   # check surface radius
-  radius = 1.25
+  radius = (4-math.sqrt(2)-2*d)*rb
+  #print(radius)
 
   # create targets on check surface
   for i in range(0,p):
-      rt[i] = radius * math.cos(math.pi*2 * i/p) + 0.5
-      zt[i] = radius * math.sin(math.pi*2 * i/p) + 0.5
+      rt[i] = radius * math.cos(math.pi*2 * i/p) + rb
+      zt[i] = radius * math.sin(math.pi*2 * i/p) + rb
 
   # check that this is actually points in a box with a circle around it
-  plt.scatter(rs,zs)
-  plt.scatter(rt,zt)
-  plt.show()
+  #plt.scatter(rs,zs)
+  #plt.scatter(rt,zt)
+  #plt.show()
   
-  print(rs)
-  print(zs)
-  print(rt)
-  print(zt)
+  #print(rs)
+  #print(zs)
+  #print(rt)
+  #print(zt)
   
   # initiate kernel matrix
   K = np.zeros(shape=(p,N))
@@ -54,8 +59,8 @@ def checkpotential(N,p):
       K[i,j] = (1/(2*math.pi))*np.log(math.sqrt(np.square(rs[j]-rt[i])+
       np.square(zs[j]-zt[i])))
 
-  print(K)
-  print(phi)
+  #print(K)
+  #print(phi)
   
   # initiate check potential vector
   q = np.zeros(shape=(p,1))
@@ -67,4 +72,4 @@ def checkpotential(N,p):
   
   print(q)
 
-checkpotential(20,10)
+checkpotential(20,10,0.5)
