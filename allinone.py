@@ -9,11 +9,11 @@ import math
 import matplotlib.pyplot as plt
 
 # N is number of sources in each box
-N1 = 20
-N2 = 40
+N1 = 400
+N2 = 400
 
-# p is the number of discretization points on the upward check surfaces
-p = 10
+# p is the number of discretization points on the surfaces
+p = 16
 
 # 2*rb is the side length of each box
 rb = 0.5
@@ -120,6 +120,8 @@ K1 = np.zeros(shape=(p,N1))
 K2 = np.zeros(shape=(p,N2))
 K3 = np.zeros(shape=(p,p))
 K4 = np.zeros(shape=(p,p))
+K5 = np.zeros(shape=(p,p))
+K6 = np.zeros(shape=(p,p))
 
 # calculate kernel matrices
 # green's function at rt1,zt1 on the upward check surface and rs1,zs1 sources
@@ -146,16 +148,29 @@ for i in range(0,p):
     K4[i,j] = (1/(2*math.pi))*np.log(math.sqrt(np.square(rt2[i]-rq2[j])+
     np.square(zt2[i]-zq2[j])))
 
+# green's function at rq1,zq1 on down check surf & rq2,zq2 on up equiv surface
+for i in range(0,p):
+  for j in range(0,p):
+    K5[i,j] = (1/(2*math.pi))*np.log(math.sqrt(np.square(rq1[i]-rq2[j])+
+    np.square(zq1[i]-zq2[j])))
+
+# green's function at rq1,zq1 on down check surf & rt1,zt1 on down equiv surface
+for i in range(0,p):
+  for j in range(0,p):
+    K6[i,j] = (1/(2*math.pi))*np.log(math.sqrt(np.square(rq1[i]-rt1[j])+
+    np.square(zq1[i]-zt1[j])))
+
+
 #print(K)
 #print(phi)
   
 # initiate upward check potential vectors
-q1 = np.zeros(shape=(p,1))
-q2 = np.zeros(shape=(p,1))
+q1u = np.zeros(shape=(p,1))
+q2u = np.zeros(shape=(p,1))
 
 # solve for the upward check potentials
-q1 = np.dot(K1,phi1)
-q2 = np.dot(K2,phi2)
+q1u = np.dot(K1,phi1)
+q2u = np.dot(K2,phi2)
 
 #for i in range(0,p):
 #  for j in range(0,N1):
@@ -171,16 +186,28 @@ q2 = np.dot(K2,phi2)
 #I1 = np.matlib.identity(N1)
 #I2 = np.matlib.identity(N2)
 
-eqd1 = p*np.dot(np.linalg.inv(K3),q1)/(2*math.pi*radiusd)
-eqd2 = p*np.dot(np.linalg.inv(K4),q2)/(2*math.pi*radiusd)
+eqd1u = p*np.dot(np.linalg.inv(K3),q1u)/(2*math.pi*radiusd)
+eqd2u = p*np.dot(np.linalg.inv(K4),q2u)/(2*math.pi*radiusd)
 
-#eqd1 = np.dot(np.dot(np.linalg.inv(alpha * I1 +
+#eqd1u = np.dot(np.dot(np.linalg.inv(alpha * I1 +
 #np.dot(np.matrix.transpose(K3),K3)),np.matrix.transpose(K3)),q1)
 
-#eqd2 = np.dot(np.dot(np.linalg.inv(alpha * I2 +
+#eqd2u = np.dot(np.dot(np.linalg.inv(alpha * I2 +
 #np.dot(np.matrix.transpose(K4),K4)),np.matrix.transpose(K4)),q2)
 
-print(eqd1)
-print(eqd2)
-# for the M2L translation operator if box 2 is in the far field of box 1
+#print(eqd1)
+#print(eqd2)
 
+# for the M2L translation operator if box 2 is in the far field of box 1
+# that is, the downward equivalent density of box 1 using info from box 2
+
+# initialize downward check potential vectors
+q1d = np.zeros(shape=(p,1))
+
+# compute the downward check potential for box 1
+q1d = np.dot(K5,eqd2u)
+
+# then compute the downward equivalent density
+eqd1d = p*np.dot(np.linalg.inv(K6),q1d)/(2*math.pi*radius)
+
+print(eqd1d)
