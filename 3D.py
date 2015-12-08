@@ -20,20 +20,22 @@ rb = 0.5
 # change these to get different boxes
 x1 = 0
 y1 = 0
+z1 = 0
 x2 = 2
 y2 = 0
+z2 = 0
 
 # c is the center of each box
-c1 = [rb + x1, rb + y1]
-c2 = [rb + x2, rb + y2]
+c1 = [rb + x1, rb + y1, rb + z1]
+c2 = [rb + x2, rb + y2, rb + z2]
 
 # create sources for box 1
-sources1 = np.random.rand(N1,2)
-sources1 = sources1 + [x1, y1]
+sources1 = np.random.rand(N1,3)
+sources1 = sources1 + [x1, y1, z1]
 
 # create sources for box 2
-sources2 = np.random.rand(N2,2)
-sources2 = sources2 + [x2, y2]
+sources2 = np.random.rand(N2,3)
+sources2 = sources2 + [x2, y2, z2]
 
 # create some density for each source. Ying says this is "given"
 # note: I wasn't sure what to put as these values
@@ -44,21 +46,27 @@ phi2 = np.random.randint(10, size=(N2,1))
 # initialize coordinate vectors
 # box 1 sources
 rs1 = np.zeros(shape=(N1,1))
+ts1 = np.zeros(shape=(N1,1))
 zs1 = np.zeros(shape=(N1,1))
 # box 1 check surface
 rc1 = np.zeros(shape=(p,1))
+tc1 = np.zeros(shape=(p,1))
 zc1 = np.zeros(shape=(p,1))
 # box 1 equiv surface
 rq1 = np.zeros(shape=(p,1))
+tq1 = np.zeros(shape=(p,1))
 zq1 = np.zeros(shape=(p,1))
 # box 2 sources
 rs2 = np.zeros(shape=(N2,1))
+ts2 = np.zeros(shape=(N2,1))
 zs2 = np.zeros(shape=(N2,1))
 # box 2 check surface
 rc2 = np.zeros(shape=(p,1))
+tc2 = np.zeros(shape=(p,1))
 zc2 = np.zeros(shape=(p,1))
 # box 3 equiv surface
 rq2 = np.zeros(shape=(p,1))
+tq2 = np.zeros(shape=(p,1))
 zq2 = np.zeros(shape=(p,1))
 
 # initiate kernel matrices
@@ -78,8 +86,9 @@ q1d = np.zeros(shape=(p,1))
 
 # break down source points into source coordinate vectors
 for i in range(0,N1):
-  rs1[i] = sources1[i,0]
-  zs1[i] = sources1[i,1]
+  rs1[i] = np.power(sources1[i,0],2) + np.power(sources1[i,1],2)
+  ts1[i] = 
+  zs1[i] = sources1[i,2]
   
 for i in range(0,N2):
   rs2[i] = sources2[i,0]
@@ -122,7 +131,7 @@ plt.scatter(rq2,zq2,color='red')
 # upward check surfaces
 plt.scatter(rc1,zc1,color='blue')
 plt.scatter(rc2,zc2,color='blue')
-plt.show()
+#plt.show()
 # uncomment the line above to show the plot
 # to continue the program after the plot, you must close the plot window
 

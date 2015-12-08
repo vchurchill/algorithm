@@ -6,14 +6,10 @@ import scipy
 from scipy import special
 import math
 import matplotlib.pyplot as plt
-#from mpl_toolkits.mplot3d import Axes3D
-#fig = plt.figure()
-#ax = fig.add_subplot(111, projection='3d')
-#ax.scatter(x, y, z, c='r', marker='o')
-
+'''
 # number of points on the curve to use
-t = 200
-
+t = 100
+'''
 # 2*rb is the side length of each box
 # for now, the box sizes are the same
 rb = 0.125
@@ -23,13 +19,12 @@ rb = 0.125
 x1 = 0
 y1 = 0
 x2 = 0.5
-y2 = 0.25
+y2 = 0
 
 # c is the center of each box
 c1 = [rb + x1, rb + y1]
 c2 = [rb + x2, rb + y2]
-
-
+'''
 # initialize vectors/matrices
 r = np.zeros(shape=(t,1))
 z = np.zeros(shape=(t,1))
@@ -38,17 +33,18 @@ box2 = np.zeros(shape=(t,2))
 
 # create source points on the curve x + (y-1)^2 = 1
 for i in range(t):
-  z[i] = np.random.uniform(0,2)
-  r[i] = -np.power(z[i],2)+2*z[i]
+  z[i] = i/t
+  #np.random.uniform(0,2)
+  r[i] = -8*(np.square(z[i])-z[i])
 
 # plot of points on the curve
 plt.scatter(r,z,color='green')
-
+#plt.show()
 # create boxes around some points on the curve
 for i in range(t):
-  if x1<r[i]<x1+2*rb and y1<z[i]<y1+2*rb:
+  if x1<r[i]<(x1+2*rb) and y1<z[i]<(y1+2*rb):
     box1[i] = [r[i],z[i]]
-  if x2<r[i]<x2+2*rb and y2<z[i]<y2+2*rb:
+  if x2<r[i]<(x2+2*rb) and y2<z[i]<(y2+2*rb):
     box2[i] = r[i],z[i]
 
 sources1 = box1[box1[:,1] != 0]
@@ -56,17 +52,17 @@ sources2 = box2[box2[:,1] != 0]
 
 N1 = len(sources1)
 N2 = len(sources2)
-
-#print(box1)
-#print(box2)
-#print(N1)
-#print(N2)
-
+'''
 # p is the number of discretization points on the surfaces
-p = (N1+N2)
+p = 7
+#(N1+N2)
 
+print(p)
+'''
 # create some density for each source. Ying says this is "given"
-# note: I wasn't sure what to put as these values
+def f(x,y):
+  return x+y
+
 # just did random integers from 0 to 10
 phi1 = np.random.randint(10, size=(N1,1))
 phi2 = np.random.randint(10, size=(N2,1))
@@ -75,30 +71,34 @@ phi2 = np.random.randint(10, size=(N2,1))
 # box 1 sources
 rs1 = np.zeros(shape=(N1,1))
 zs1 = np.zeros(shape=(N1,1))
+'''
 # box 1 check surface
 rc1 = np.zeros(shape=(p,1))
 zc1 = np.zeros(shape=(p,1))
 # box 1 equiv surface
 rq1 = np.zeros(shape=(p,1))
 zq1 = np.zeros(shape=(p,1))
+'''
 # box 2 sources
 rs2 = np.zeros(shape=(N2,1))
 zs2 = np.zeros(shape=(N2,1))
 # box 2 check surface
 rc2 = np.zeros(shape=(p,1))
 zc2 = np.zeros(shape=(p,1))
-# box 3 equiv surface
+'''
+# box 2 equiv surface
 rq2 = np.zeros(shape=(p,1))
 zq2 = np.zeros(shape=(p,1))
-
+'''
 # initiate kernel matrices
 K1 = np.zeros(shape=(p,N1))
 K2 = np.zeros(shape=(p,N2))
 K3 = np.zeros(shape=(p,p))
 K4 = np.zeros(shape=(p,p))
+'''
 K5 = np.zeros(shape=(p,p))
 K6 = np.zeros(shape=(p,p))
-
+'''
 # initialize upward check potential vectors
 q1u = np.zeros(shape=(p,1))
 q2u = np.zeros(shape=(p,1))
@@ -114,7 +114,7 @@ for i in range(0,N1):
 for i in range(0,N2):
   rs2[i] = sources2[i,0]
   zs2[i] = sources2[i,1]
-
+'''
 # create discretization points on surfaces
 # define surface constant
 d=0.1
@@ -131,12 +131,12 @@ for i in range(0,p):
 for i in range(0,p):
   rq1[i] = radius2 * math.cos(math.pi*2 * i/p) + c1[0]
   zq1[i] = radius2 * math.sin(math.pi*2 * i/p) + c1[1]
-
+'''
 # box 2 upward check surface and downward equivalent surface points
 for i in range(0,p):
   rc2[i] = radius1 * math.cos(math.pi*2 * i/p) + c2[0]
   zc2[i] = radius1 * math.sin(math.pi*2 * i/p) + c2[1]
-
+'''
 # box 2 upward equivalent surface and downward check surface points
 for i in range(0,p):
   rq2[i] = radius2 * math.cos(math.pi*2 * i/p) + c2[0]
@@ -144,6 +144,7 @@ for i in range(0,p):
 
 # check that this is actually points in a box with a circle around it
 # sources
+'''
 plt.scatter(rs1,zs1,color='black')
 plt.scatter(rs2,zs2,color='black')
 # upward equivalent surfaces
@@ -155,70 +156,65 @@ plt.scatter(rc2,zc2,color='blue')
 #plt.show()
 # uncomment the line above to show the plot
 # to continue the program after the plot, you must close the plot window
+'''
+# define Green's function
+def G(r1,z1,r2,z2):
+  return (1/(2*math.pi))*np.log(math.sqrt(np.square(r1-r2)+np.square(z1-z2)))
 
 # calculate kernel matrices
-
-special = scipy.special.lqn(1/2,2)
-print(special)
-
 # green's function at rt1,zt1 on the upward check surface and rs1,zs1 sources
 # p x N1 matrix, used to compute up check potential for box 1
+'''
 for i in range(0,p):
   for j in range(0,N1):
-    K1[i,j] = 1/(4*math.pi*np.sqrt(np.square(rc1[i])+np.square(rs1[j])
-    -2*rc1[i]*rs1[j]+np.square(zc1[i]-zs1[j])))
+    K1[i,j] = G(rc1[i],zc1[i],rs1[j],zs1[j])
 
 # green's function at rt2,zt2 on the upward check surface and rs2,zs2 sources
 # p x N2 matrix, used to find up check potential for box 2
-#for i in range(0,p):
-#  for j in range(0,N2):
-#    K2[i,j] = (1/(2*math.pi))*np.log(math.sqrt(np.square(rc2[i]-rs2[j])+
-#    np.square(zc2[i]-zs2[j])))
+for i in range(0,p):
+  for j in range(0,N2):
+    K2[i,j] = G(rc2[i],zc2[i],rs2[j],zs2[j])
 
 # green's function at rc1,zc1 on up check surf & rq1,zq1 on up equiv surface
 # p x p matrix, used to solve integral eqn for up equiv density of box 1
-#for i in range(0,p):
-#  for j in range(0,p):
-#    K3[i,j] = (1/(2*math.pi))*np.log(math.sqrt(np.square(rc1[i]-rq1[j])+
-#    np.square(zc1[i]-zq1[j])))
+for i in range(0,p):
+  for j in range(0,p):
+    K3[i,j] = G(rc1[i],zc1[i],rq1[j],zq1[j])
 
 # green's function at rt2,zt2 on up check surf & rq2,zq2 on up equiv surface
 # p x p matrix, used to solve integral eqn for up equiv density of box 2
-#for i in range(0,p):
-#  for j in range(0,p):
-#    K4[i,j] = (1/(2*math.pi))*np.log(math.sqrt(np.square(rc2[i]-rq2[j])+
-#    np.square(zc2[i]-zq2[j])))
-
+for i in range(0,p):
+  for j in range(0,p):
+    K4[i,j] = G(rc2[i],zc2[i],rq2[j],zq2[j])
+'''
 # green's function at rq1,zq1 on down check surf & rq2,zq2 on up equiv surface
 # p x p matrix, used to find down check potential for box 1
-#for i in range(0,p):
-#  for j in range(0,p):
-#    K5[i,j] = (1/(2*math.pi))*np.log(math.sqrt(np.square(rq1[i]-rq2[j])+
-#    np.square(zq1[i]-zq2[j])))
+for i in range(0,p):
+  for j in range(0,p):
+    K5[i,j] = G(rq1[i],zq1[i],rq2[j],zq2[j])
 
-# green's function at rq1,zq1 on down check surf & rt1,zt1 on down equiv surf
+# green's function at rq1,zq1 on down check surf & rc1,zc1 on down equiv surf
 # p x p matrix, used to solve integral eqn for down equiv density of box 1
-#for i in range(0,p):
-#  for j in range(0,p):
-#    K6[i,j] = (1/(2*math.pi))*np.log(math.sqrt(np.square(rq1[i]-rc1[j])+
-#    np.square(zq1[i]-zc1[j])))
+for i in range(0,p):
+  for j in range(0,p):
+    K6[i,j] = G(rq1[i],zq1[i],rc1[j],zc1[j])
 
 # now solve for the upward check potentials
 # q = K*phi
 #q1u = np.dot(K1,phi1)
 #q2u = np.dot(K2,phi2)
 
-# now use Tikhonov regularization
+# define tikhonov regularization function
 # regularization parameter
-#alpha = np.power(10,-12)
+alpha = np.power(10,-12)
 # identity matrix
-#I = np.matlib.identity(p)
-# solve the integral eq'n for the upward equivalent densities
-#eqd1u = (p/(2*math.pi*radius2))*np.dot(np.dot(np.linalg.inv(alpha*I +
-#np.dot(np.matrix.transpose(K3),K3)),np.matrix.transpose(K3)),q1u)
+I = np.matlib.identity(p)
+def tikh(M):
+  return np.dot(np.linalg.inv(alpha*I+np.dot(np.matrix.transpose(M),M)),np.matrix.transpose(M))
 
-#eqd2u = (p/(2*math.pi*radius2))*np.dot(np.dot(np.linalg.inv(alpha*I +
-#np.dot(np.matrix.transpose(K4),K4)),np.matrix.transpose(K4)),q2u)
+# solve the integral eq'n for the upward equivalent densities
+#eqd1u = (p/(2*math.pi*radius2))*np.dot(tikh(K3),q1u)
+#eqd2u = (p/(2*math.pi*radius2))*np.dot(tikh(K4),q2u)
 
 # now for the M2L translation operator
 # if box 2 is in the far field of box 1
@@ -229,13 +225,11 @@ for i in range(0,p):
 #q1d = np.dot(K5,eqd2u)
 
 # then compute the downward equivalent density again using Tikhonov
-#eqd1d = (p/(2*math.pi*radius1))*np.dot(np.dot(np.linalg.inv(alpha*I +
-#np.dot(np.matrix.transpose(K6),K6)),np.matrix.transpose(K6)),q1d)
+#eqd1d = (p/(2*math.pi*radius1))*np.dot(tikh(K6),q1d)
 
 # I glossed over our use of it, but the M2L operator is a matrix:
 # (p/(2*math.pi*radius1))*[(alpha*I + K6^T*K6)^(-1)]*K6^T*K5
 
-#M2L = (p/(2*math.pi*radius1))*np.dot(np.dot(np.linalg.inv(alpha*I +
-#np.dot(np.matrix.transpose(K6),K6)),np.matrix.transpose(K6)),K5)
+M2L = (p/(2*math.pi*radius1))*np.dot(tikh(K6),K5)
 
-#print(M2L)
+print(M2L)
