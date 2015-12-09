@@ -7,7 +7,8 @@ from tikh import *
 import math
 import matplotlib.pyplot as plt
 
-def M2M(x1,y1,x2,y2,rb,p):
+
+def L2L(x1,y1,x2,y2,rb,p):
   # 2*rb is the side length of the child box
   # 4*rb is the side length of the parent box
 
@@ -45,45 +46,45 @@ def M2M(x1,y1,x2,y2,rb,p):
   radius1 = (4-math.sqrt(2)-2*d)*rb
   radius2 = (math.sqrt(2)+d)*rb
 
-  # box 1 upward check surface and downward equivalent surface points
+  # box 1 downward equivalent surface points
   for i in range(0,p):
     rc1[i] = 2*radius1 * math.cos(math.pi*2 * i/p) + c1[0]
     zc1[i] = 2*radius1 * math.sin(math.pi*2 * i/p) + c1[1]
 
-  # box 1 upward equivalent surface and downward check surface points
+  # box 1 downward check surface points
   for i in range(0,p):
     rq1[i] = 2*radius2 * math.cos(math.pi*2 * i/p) + c1[0]
     zq1[i] = 2*radius2 * math.sin(math.pi*2 * i/p) + c1[1]
 
-  # box 2 upward check surface and downward equivalent surface points
+  # box 2 downward equivalent surface points
   for i in range(0,p):
     rc2[i] = radius1 * math.cos(math.pi*2 * i/p) + c2[0]
     zc2[i] = radius1 * math.sin(math.pi*2 * i/p) + c2[1]
 
-  # box 2 upward equivalent surface and downward check surface points
+  # box 2 downward check surface points
   for i in range(0,p):
     rq2[i] = radius2 * math.cos(math.pi*2 * i/p) + c2[0]
     zq2[i] = radius2 * math.sin(math.pi*2 * i/p) + c2[1]
 
-  # upward equivalent surfaces
-  plt.scatter(rq1,zq1,color='red')
-  plt.scatter(rq2,zq2,color='red')
-  # upward check surfaces
-  plt.scatter(rc1,zc1,color='blue')
-  plt.scatter(rc2,zc2,color='blue')
+  # down check surfaces
+  plt.scatter(rq1,zq1,color='blue')
+  plt.scatter(rq2,zq2,color='blue')
+  # down equiv surfaces
+  plt.scatter(rc1,zc1,color='red')
+  plt.scatter(rc2,zc2,color='red')
   plt.show()
 
   # calculate kernel matrices
 
-  # green's function at rc1,zc1 on up check surf & rq2,zq2 on up equiv surface
+  # green's function at rc1,zc1 on down equiv surf & rq2,zq2 on down check surface
   for i in range(0,p):
     for j in range(0,p):
-      K1[i,j] = Laplace2D(rc1[i],zc1[i],rq2[j],zq2[j])
+      K1[i,j] = Laplace2D(rq2[i],zq2[i],rc1[j],zc1[j])
 
-  # green's function at rq1,zq1 on up equiv surf & rc1,zc1 on up check surf
+  # green's function at rq1,zq1 on down check surf & rc1,zc1 on down equiv surf
   for i in range(0,p):
     for j in range(0,p):
-      K2[i,j] = Laplace2D(rq1[i],zq1[i],rc1[j],zc1[j])
+      K2[i,j] = Laplace2D(rq2[i],zq2[i],rc2[j],zc2[j])
 
   # now use Tikhonov regularization
   # regularization parameter
@@ -94,4 +95,4 @@ def M2M(x1,y1,x2,y2,rb,p):
   # to the upward equivalent density of its parent box 1
   return np.dot(tikh(K2,p),K1)
 
-print(M2M(0,0,0,0,1/2,16))
+print(L2L(0,0,0,0,1/2,16))

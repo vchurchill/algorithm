@@ -5,16 +5,9 @@ import numpy.matlib
 import scipy
 from scipy import special
 from green import *
+from tikh import *
 import math
 import matplotlib.pyplot as plt
-
-# define tikhonov regularization function
-def tikh(M,p):
-  # regularization parameter
-  alpha = np.power(10,-12)
-  # identity matrix
-  I = np.matlib.identity(p)
-  return np.dot(np.linalg.inv(alpha*I+np.dot(np.matrix.transpose(M),M)),np.matrix.transpose(M))
 
 def M2L(x1,y1,x2,y2,rb,p):
   # this is the M2L from box 2 to box 1
