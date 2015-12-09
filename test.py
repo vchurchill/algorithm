@@ -2,8 +2,18 @@
 import numpy as np
 import numpy.linalg
 import numpy.matlib
+from green import *
 import math
 import matplotlib.pyplot as plt
+
+# define tikhonov regularization function
+def tikh(M,p):
+  # regularization parameter
+  alpha = np.power(10,-12)
+  # identity matrix
+  I = np.matlib.identity(p)
+  return np.dot(np.linalg.inv(alpha*I+np.dot(np.matrix.transpose(M),M)),np.matrix.transpose(M))
+
 
 # N is the number of sources in each box
 N1 = 20

@@ -82,7 +82,7 @@ def M2L(x1,y1,x2,y2,rb,p):
   # The M2L operator translating up equiv density of box 2
   # to down equiv density of box 1 is this matrix:
 
-  return (p/(2*math.pi*radius1))*np.dot(tikh(K2,p),K1)
+  return np.dot(tikh(K2,p),K1)
 
 
 #import sys
