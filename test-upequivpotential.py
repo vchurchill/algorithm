@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 N1 = 20
 
 # p is the number of discretization points on the surfaces
-p = 16
+p = 10
 
 # 2*rb is the side length of each box
 # for now, the box sizes are the same
@@ -49,7 +49,8 @@ zq1 = np.zeros(shape=(p,1))
 # initiate kernel matrices
 K1 = np.zeros(shape=(p,N1))
 K2 = np.zeros(shape=(N1,1))
-K3 = np.zeros(shape=(p,1))
+K3 = np.zeros(shape=(p,p))
+K4 = np.zeros(shape=(p,1))
 
 # initialize upward check potential vectors
 q1u = np.zeros(shape=(p,1))
@@ -66,12 +67,12 @@ d=0.1
 radius1 = (4-math.sqrt(2)-2*d)*rb
 radius2 = (math.sqrt(2)+d)*rb
 
-# box 1 upward check surface and downward equivalent surface points
+# box 1 upward check surface
 for i in range(0,p):
   rc1[i] = radius1 * math.cos(math.pi*2 * i/p) + c1[0]
   zc1[i] = radius1 * math.sin(math.pi*2 * i/p) + c1[1]
 
-# box 1 upward equivalent surface and downward check surface points
+# box 1 upward equivalent surface
 for i in range(0,p):
   rq1[i] = radius2 * math.cos(math.pi*2 * i/p) + c1[0]
   zq1[i] = radius2 * math.sin(math.pi*2 * i/p) + c1[1]
@@ -85,7 +86,7 @@ plt.scatter(rq1,zq1,color='red')
 plt.scatter(rc1,zc1,color='blue')
 # point
 plt.scatter(point[0],point[1],color='green')
-plt.show()
+#plt.show()
 
 # calculate kernel matrices
 
@@ -102,11 +103,12 @@ for j in range(0,N1):
 
 # green's function at rt1,zt1 on up check surf & rq1,zq1 on up equiv surface
 # p x p matrix, used to solve integral eqn for up equiv density of box 1
-for j in range(0,p):
-  K3[j] = (1/(2*math.pi))*np.log(math.sqrt(np.square(point[0]-rq1[j])+np.square(point[1]-zq1[j])))
+for i in range(0,p):
+  for j in range(0,p):
+    K3[i,j] = (1/(2*math.pi))*np.log(math.sqrt(np.square(rc1[i]-rq1[j])+np.square(zc1[i]-zq1[j])))
 
-print(K2)
-print(K3)
+for i in range(0,p):
+  K4[i] = (1/(2*math.pi))*np.log(math.sqrt(np.square(point[0]-rq1[j])+np.square(point[1]-zq1[j])))
 
 # now solve for the upward check potentials
 q1u = np.dot(K1,phi1)
@@ -117,4 +119,9 @@ alpha = np.power(10,-12)
 # identity matrix
 I = np.matlib.identity(p)
 # solve the integral eq'n for the upward equivalent densities
-#eqd1u = (p/(2*math.pi*radius2))*np.dot(np.dot(np.linalg.inv(alpha*I+np.dot(np.matrix.transpose(K3),K3)),np.matrix.transpose(K3)),q1u)
+eqd1u = np.dot(np.dot(np.linalg.inv(alpha*I+np.dot(np.matrix.transpose(K3),K3)),np.matrix.transpose(K3)),q1u)
+
+real = np.sum(np.multiply(K2,phi1))
+est = np.sum(np.multiply(K4,eqd1u))
+print(real)
+print(est)
