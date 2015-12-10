@@ -13,7 +13,7 @@ def q(r1,z1,r2,z2,n):
 def Laplace2D(r1,z1,r2,z2):
   return (1/(2*math.pi))*np.log(math.sqrt(np.square(r1-r2)+np.square(z1-z2)))
 
-def Laplace3D(r1,z1,r2,z2):
+def Laplace3D(r1,t1,z1,r2,t2,z2):
   return 1/(4*math.pi*np.power((np.square(r1-r2)+np.square(z1-z2)),1/2))
 
 def LaplaceF2D(r1,z1,r2,z2,n):
