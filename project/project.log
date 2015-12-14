@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  14 DEC 2015 03:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  14 DEC 2015 11:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -648,90 +648,76 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 {/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-</Users/HomeBase/Downloads/3dsurface.jpg, id=11, 426.59375pt x 334.24875pt>
-File: /Users/HomeBase/Downloads/3dsurface.jpg Graphic file (type jpg)
-
-<use /Users/HomeBase/Downloads/3dsurface.jpg>
-Package pdftex.def Info: /Users/HomeBase/Downloads/3dsurface.jpg used on input 
-line 90.
+<3dsurface.jpg, id=11, 426.59375pt x 334.24875pt>
+File: 3dsurface.jpg Graphic file (type jpg)
+ <use 3dsurface.jpg>
+Package pdftex.def Info: 3dsurface.jpg used on input line 90.
 (pdftex.def)             Requested size: 383.93082pt x 300.82109pt.
- [2] [3 </Users/HomeBase/Downloads/3dsurface.jpg>]
-</Users/HomeBase/Downloads/2dcurve.png, id=24, 832.10875pt x 511.9125pt>
-File: /Users/HomeBase/Downloads/2dcurve.png Graphic file (type png)
+ [2]
+[3 <./3dsurface.jpg>] <2dcurve.png, id=24, 832.10875pt x 511.9125pt>
+File: 2dcurve.png Graphic file (type png)
 
-<use /Users/HomeBase/Downloads/2dcurve.png>
-Package pdftex.def Info: /Users/HomeBase/Downloads/2dcurve.png used on input li
-ne 112.
+<use 2dcurve.png>
+Package pdftex.def Info: 2dcurve.png used on input line 112.
 (pdftex.def)             Requested size: 332.8376pt x 204.76137pt.
- [4 </Users/HomeBase/Downloads/2dcurve.png>] [5] [6] [7]
-</Users/HomeBase/Downloads/ued-curve.png, id=46, 451.6875pt x 351.2322pt>
-File: /Users/HomeBase/Downloads/ued-curve.png Graphic file (type png)
-
-<use /Users/HomeBase/Downloads/ued-curve.png>
-Package pdftex.def Info: /Users/HomeBase/Downloads/ued-curve.png used on input 
-line 184.
+ [4 <./2dcurve.png>] [5] [6] [7]
+<ued-curve.png, id=46, 451.6875pt x 351.2322pt>
+File: ued-curve.png Graphic file (type png)
+ <use ued-curve.png>
+Package pdftex.def Info: ued-curve.png used on input line 184.
 (pdftex.def)             Requested size: 225.84319pt x 175.61566pt.
 
-</Users/HomeBase/Downloads/ded-curve.png, id=47, 452.4102pt x 351.9549pt>
-File: /Users/HomeBase/Downloads/ded-curve.png Graphic file (type png)
-
-<use /Users/HomeBase/Downloads/ded-curve.png>
-Package pdftex.def Info: /Users/HomeBase/Downloads/ded-curve.png used on input 
-line 185.
+<ded-curve.png, id=47, 452.4102pt x 351.9549pt>
+File: ded-curve.png Graphic file (type png)
+ <use ded-curve.png>
+Package pdftex.def Info: ded-curve.png used on input line 185.
 (pdftex.def)             Requested size: 226.20454pt x 175.97702pt.
  [8]
-</Users/HomeBase/Downloads/M2M-curve.png, id=51, 451.6875pt x 351.2322pt>
-File: /Users/HomeBase/Downloads/M2M-curve.png Graphic file (type png)
-
-<use /Users/HomeBase/Downloads/M2M-curve.png>
-Package pdftex.def Info: /Users/HomeBase/Downloads/M2M-curve.png used on input 
-line 202.
+<M2M-curve.png, id=51, 451.6875pt x 351.2322pt>
+File: M2M-curve.png Graphic file (type png)
+ <use M2M-curve.png>
+Package pdftex.def Info: M2M-curve.png used on input line 202.
 (pdftex.def)             Requested size: 225.84319pt x 175.61566pt.
- [9 </Users/HomeBase/Downloads/ued-curve.png> </Users/HomeBase/Downloads/ded-cu
-rve.png>]
-</Users/HomeBase/Downloads/M2L-curve.png, id=57, 452.4102pt x 351.9549pt>
-File: /Users/HomeBase/Downloads/M2L-curve.png Graphic file (type png)
+ [9 <./ued-curve.png> <./ded-curve.png>] <M2L-curve.png, id=57, 452.4102pt x 35
+1.9549pt>
+File: M2L-curve.png Graphic file (type png)
 
-<use /Users/HomeBase/Downloads/M2L-curve.png>
-Package pdftex.def Info: /Users/HomeBase/Downloads/M2L-curve.png used on input 
-line 216.
+<use M2L-curve.png>
+Package pdftex.def Info: M2L-curve.png used on input line 216.
 (pdftex.def)             Requested size: 226.20454pt x 175.97702pt.
- [10 </Users/HomeBase/Downloads/M2M-curve.png>]
-</Users/HomeBase/Downloads/L2L-curve.png, id=62, 578.16pt x 433.62pt>
-File: /Users/HomeBase/Downloads/L2L-curve.png Graphic file (type png)
-
-<use /Users/HomeBase/Downloads/L2L-curve.png>
-Package pdftex.def Info: /Users/HomeBase/Downloads/L2L-curve.png used on input 
-line 230.
+ [10 <./M2M-curve.png>]
+<L2L-curve.png, id=62, 578.16pt x 433.62pt>
+File: L2L-curve.png Graphic file (type png)
+ <use L2L-curve.png>
+Package pdftex.def Info: L2L-curve.png used on input line 230.
 (pdftex.def)             Requested size: 289.07928pt x 216.80946pt.
- [11 </Users/HomeBase/Downloads/M2L-curve.png>] [12 </Users/HomeBase/Downloads/
-L2L-curve.png>] [13] [14] [15]
-(./project.aux) ) 
+ [11 <./M2L-curve.png>] [12 <./L2L-curve.png>] [13] [14] [15] (./project.aux) )
+ 
 Here is how much of TeX's memory you used:
- 21184 strings out of 493089
- 540701 string characters out of 6134842
- 709634 words of memory out of 5000000
+ 21183 strings out of 493089
+ 539947 string characters out of 6134842
+ 709635 words of memory out of 5000000
  24277 multiletter control sequences out of 15000+600000
  13371 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,12n,77p,870b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmbx12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmbx8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmex10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmmi6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-mi8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
-2.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.
-pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb
-></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></
-usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></u
-sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr
-/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/l
-ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/lo
-cal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></us
-r/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on project.pdf (15 pages, 365417 bytes).
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
+/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></u
+sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
+r/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr
+/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/l
+ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/loc
+al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local
+/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/t
+exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texl
+ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive
+/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/
+2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/20
+15/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2015
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2015/
+texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2
+015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on project.pdf (15 pages, 365080 bytes).
 PDF statistics:
  134 PDF objects out of 1000 (max. 8388607)
  87 compressed objects within 1 object stream

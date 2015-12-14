@@ -87,7 +87,7 @@ The upward and downward formulation of the aforementioned equivalent densities a
 
 \begin{figure}[!ht]
 \begin{center}
-\includegraphics[scale=0.9]{/Users/HomeBase/Downloads/3dsurface}
+\includegraphics[scale=0.9]{3dsurface}
 \end{center}
 \caption{An axisymmetric surface $\Gamma$ in 3D.}
 \end{figure}
@@ -99,7 +99,7 @@ Consider the Fredholm integral equation of the first kind defined on the axisymm
 \begin{align}
 \int_\Gamma k(\mathbf{x},\mathbf{y})\phi(\mathbf{y})d\mathbf{y} &= q(\mathbf{x}) &\mathbf{x}\in\Gamma
 \end{align}
-where $k$ is a kernel function, $\phi$ is an unknown density, and $q$ is a potential. This is exactly the same type of integral equation we see in the 3D KIFMM, in particular $(1)$ is the $S2M$ equation in \cite{YBZ}.
+where $k$ is a kernel function, $\phi$ is an unknown density, and $q$ is a potential. This is exactly the same type of integral equation we see in the 3D KIFMM.
 
 The surface $\Gamma$ is obtained by rotating a curve $\gamma$ about the $z$ axis. $\gamma$ is called the generating curve, shown in Figure 2. In particular, $\Gamma=\gamma\times\mathbb{T}$ where $\mathbb{T}$ is the one-dimensional torus (circle) parametrized by $\theta\in(-\pi,\pi]$. Since $k(\mathbf{x},\mathbf{y})$ is axisymmetric, we have that $k$ is a function only of the difference between $\theta$ and $\theta'$:
 \begin{align}
@@ -109,7 +109,7 @@ where $\mathbf{x}=(r,z,\theta)$ and $\mathbf{y}=(r',z',\theta')$  in 3D cylindri
 
 \begin{figure}[!ht]
 \begin{center}
-\includegraphics[scale=0.4]{/Users/HomeBase/Downloads/2dcurve}
+\includegraphics[scale=0.4]{2dcurve}
 \end{center}
 \caption{The generating curve $\gamma$ in 2D, of an axisymmetric surface $\Gamma$ in 3D.}
 \end{figure}
@@ -181,8 +181,8 @@ where in $(17)$, $M_n$ is the matrix of kernel evaluations of pairs of discretiz
 
 \begin{figure}[!ht]
 \begin{center}
-\includegraphics[scale=0.5]{/Users/HomeBase/Downloads/ued-curve}
-\includegraphics[scale=0.5]{/Users/HomeBase/Downloads/ded-curve}
+\includegraphics[scale=0.5]{ued-curve}
+\includegraphics[scale=0.5]{ded-curve}
 \end{center}
 \caption{Left: The upward check (blue) and equivalent (red) surfaces of a box used to compute the upward equivalent density due to source densities (black) in the box. Right: The downward check (blue) and equivalent (red) surfaces of a box used to compute the downward equivalent density due to sources densities (black) in the far field on the box. In the algorithm, we never actually directly compute a downward equivalent density.}
 \end{figure}
@@ -199,7 +199,7 @@ In the previous step, we computed the upward equivalent density for each leaf bo
 where $M_n^A$ is the matrix of kernel evaluations of pairs of discretization points on the upward check surface of box $B$ and the upward equivalent surface of box $A$, and $M_n^B$ is the matrix of kernel evaluations of pairs of discretization points on the upward check surface of box $B$ and the upward equivalent surface of box $B$. Figure 4 gives a graphical representation of this step.
 \begin{figure}[!ht]
 \begin{center}
-\includegraphics[scale=0.5]{/Users/HomeBase/Downloads/M2M-curve}
+\includegraphics[scale=0.5]{M2M-curve}
 \end{center}
 \caption{The upward equivalent density due to the source densities (black) in the child box computed from the upward equivalent (red) and check (blue) surfaces of the child box is translated to the upward equivalent density of the parent box, checking against its upward check (blue) and equivalent (red) surfaces.}
 \end{figure}
@@ -213,7 +213,7 @@ where $M_n^A$ is the matrix of kernel evaluations of pairs of discretization poi
 
 \begin{figure}[!ht]
 \begin{center}
-\includegraphics[scale=0.5]{/Users/HomeBase/Downloads/M2L-curve}
+\includegraphics[scale=0.5]{M2L-curve}
 \end{center}
 \caption{The upward equivalent density due to the source densities (black) in a box computed from the upward equivalent (red) and check (blue) surfaces of the child box is translated to the downward equivalent density of another box on the same level, checking against its upward check (blue) and equivalent (red) surfaces.}
 \end{figure}
@@ -227,7 +227,7 @@ where $M_n^A$ is the matrix of kernel evaluations of pairs of discretization poi
 
 \begin{figure}[!ht]
 \begin{center}
-\includegraphics[scale=0.5]{/Users/HomeBase/Downloads/L2L-curve}
+\includegraphics[scale=0.5]{L2L-curve}
 \end{center}
 \caption{The downward equivalent density due to the source densities (black) in a parent box computed from the upward equivalent (red) and check (blue) surfaces of the parent box is translated to the downward equivalent density of a child box, checking against its upward check (blue) and equivalent (red) surfaces.}
 \end{figure}
@@ -252,9 +252,9 @@ In particular, we notice from $(3)$ and $(14)$ that each integrand
 \begin{align}
 k_n(r,z,r',z')r'=\sqrt{\frac{r'}{8\pi^3r}}Q_{n-\frac{1}{2}}\bigg(\frac{r^2+(r')^2+(z-z')^2}{2rr'}\bigg)
 \end{align}
-depends on $\frac{r^2+(r')^2+(z-z')^2}{2rr'}$ and a constant $\sqrt{\frac{r'}{8\pi^3r}}$. Consequently, the translation operators depend on these same values.
+depends on $\frac{r^2+(r')^2+(z-z')^2}{2rr'}$ and a constant $\sqrt{\frac{r'}{8\pi^3r}}$. Since the translation operators are just matrices of kernel evaluations, they depend on these same values.
 
-For example, take $\frac{r^2+(r')^2+(z-z')^2}{2rr'}$ and $\sqrt{\frac{r'}{8\pi^3r}}$ as the arguments in consideration for an M2L operator from one box to a box horizontally one unit away. If we wanted to know the M2L operator from that same box to a box horizontally two units away, we could substitute $r'+1$ for $r'$ and see that now the operator depends on $\frac{r^2+(r')^2+2r'+1+(z-z')^2}{2rr'+2r}$ and $\sqrt{\frac{r'}{8\pi^3r}+\frac{1}{8\pi^3r}}$. 
+For example, take $\frac{r^2+(r')^2+(z-z')^2}{2rr'}$ and $\sqrt{\frac{r'}{8\pi^3r}}$ as the terms an M2L operator from one box to a box horizontally one unit away depends on. If we wanted to know the M2L operator from that same box to a box horizontally two units away, we could substitute $r'+1$ for $r'$ and see that now the operator depends on $\frac{r^2+(r')^2+2r'+1+(z-z')^2}{2rr'+2r}$ and $\sqrt{\frac{r'}{8\pi^3r}+\frac{1}{8\pi^3r}}$. 
 
 One relationship we have noticed is that M2M operators, holding their global and relative positions constant, were the same regardless of the size of the box. That is, if you had child, parent, and grandparent boxes such that the bottom left corner was the same for every box, the child was the bottom left quadrant of the parent, and the parent was the bottom left quadrant of the grandparent, then the M2M operator from the child to the parent was the same as from the parent to the grandparent. We suspect this may be the same for L2L as well.
 
