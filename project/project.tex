@@ -63,7 +63,7 @@
 \begin{document}
 \pagenumbering{arabic}
 
-\title{An easier KIFMM algorithm for density distributions\\on axisymmetric surfaces of revolution}
+\title{An alternate KIFMM algorithm for density distributions\\on axisymmetric surfaces of revolution}
 \date{December 14, 2015}
 \author{Victor Churchill}
 \clearpage
@@ -241,16 +241,16 @@ The equations in $\S3.2.1$ are discretized using $p$ points on the equivalent an
 
 For example, the M2L operator is the matrix $T^{M2L}_n$ for a mode $n$ is obtained by solving $(20)$:
 \begin{align}
-\phi^{B,d}_n&=\bigg[\big[\alpha I +(K_n^B)^TK_n^B\big](K_n^B)^TK_n^A\bigg]\phi^{A,u}_n\\
-\implies T^{M2L}_n &= \bigg[\big[\alpha I +(K_n^B)^TK_n^B\big](K_n^B)^TK_n^A\bigg]
+\phi^{B,d}_n&=\bigg[\big[\alpha I +(M_n^B)^TM_n^B\big](M_n^B)^TM_n^A\bigg]\phi^{A,u}_n\\
+\implies T^{M2L}_n &= \bigg[\big[\alpha I +(M_n^B)^TM_n^B\big](M_n^B)^TM_n^A\bigg]
 \end{align}
 
 \subsubsection{Non-uniform translation operators}
 It's important to note that in the original KIFMM, translation operators only differ based on relative position and level in the hierarchical tree. This is because the kernels used there only depended the relative difference between coordinate values, e.g. $(r-r')$. As mentioned in $\S3.1$, for the single-layer Laplace kernel, however, we are not so lucky and so we need to look for some other relationship between the translation operators.
 
-In particular, we notice from $(3)$ and $(14)$ that each integral operator 
+In particular, we notice from $(3)$ and $(14)$ that each integrand
 \begin{align}
-K_n = k_n(r,z,r',z')r'=\sqrt{\frac{r'}{8\pi^3r}}Q_{n-\frac{1}{2}}\bigg(\frac{r^2+(r')^2+(z-z')^2}{2rr'}\bigg)
+k_n(r,z,r',z')r'=\sqrt{\frac{r'}{8\pi^3r}}Q_{n-\frac{1}{2}}\bigg(\frac{r^2+(r')^2+(z-z')^2}{2rr'}\bigg)
 \end{align}
 depends on $\frac{r^2+(r')^2+(z-z')^2}{2rr'}$ and a constant $\sqrt{\frac{r'}{8\pi^3r}}$. Consequently, the translation operators depend on these same values.
 
@@ -269,7 +269,7 @@ In addition, in $\S3.1$ we mentioned that this strategy is currently only applic
 
 Other implementation work that needs to be done is testing various kernels, surfaces, and potentials, to perhaps find a methodical way to determine the optimal number of discretization points $p$ and the truncation parameter $N$.
 
-Lastly, once the algorithm is completely accelerated and applicable to different kernels, performing error and computational analysis will be an important part of its evaluation as a fast method.
+Lastly, once the algorithm is completely accelerated and applicable to different kernels, performing error and complexity analysis will be an important part of its evaluation as a fast method.
 
 \begin{thebibliography}{99}\addcontentsline{toc}{chapter}{Bibliography}
 
