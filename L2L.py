@@ -2,11 +2,9 @@
 import numpy as np
 import numpy.linalg
 import numpy.matlib
-from green import *
-from tikh import *
+from functions import *
 import math
 import matplotlib.pyplot as plt
-
 
 def L2L(x1,y1,x2,y2,rb,p):
   # 2*rb is the side length of the child box
@@ -75,16 +73,17 @@ def L2L(x1,y1,x2,y2,rb,p):
   plt.show()
 
   # calculate kernel matrices
-
+  # truncation parameter
+  n=3
   # green's function at rc1,zc1 on down equiv surf & rq2,zq2 on down check surface
   for i in range(0,p):
     for j in range(0,p):
-      K1[i,j] = Laplace2D(rq2[i],zq2[i],rc1[j],zc1[j])
+      K1[i,j] = LaplaceF2D(rq2[i],zq2[i],rc1[j],zc1[j],n)
 
   # green's function at rq1,zq1 on down check surf & rc1,zc1 on down equiv surf
   for i in range(0,p):
     for j in range(0,p):
-      K2[i,j] = Laplace2D(rq2[i],zq2[i],rc2[j],zc2[j])
+      K2[i,j] = LaplaceF2D(rq2[i],zq2[i],rc2[j],zc2[j],n)
 
   # now use Tikhonov regularization
   # regularization parameter
@@ -95,4 +94,4 @@ def L2L(x1,y1,x2,y2,rb,p):
   # to the upward equivalent density of its parent box 1
   return np.dot(tikh(K2,p),K1)
 
-print(L2L(0,0,0,0,1/2,16))
+print(L2L(0,0,0,0,1,16))

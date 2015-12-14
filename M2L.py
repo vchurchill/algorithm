@@ -4,18 +4,9 @@ import numpy.linalg
 import numpy.matlib
 import scipy
 from scipy import special
-from green import *
+from functions import *
 import math
 import matplotlib.pyplot as plt
-
-# define tikhonov regularization function
-def tikh(M,p):
-  # regularization parameter
-  alpha = np.power(10,-12)
-  # identity matrix
-  I = np.matlib.identity(p)
-  return np.dot(np.linalg.inv(alpha*I+np.dot(np.matrix.transpose(M),M)),np.matrix.transpose(M))
-
 
 def M2L(x1,y1,x2,y2,rb,p):
 # this is the M2L from box 2 to box 1
@@ -38,6 +29,9 @@ def M2L(x1,y1,x2,y2,rb,p):
   # box 2 equiv surface
   rq2 = np.zeros(shape=(p,1))
   zq2 = np.zeros(shape=(p,1))
+  # box 2 check surface
+  rc2 = np.zeros(shape=(p,1))
+  zc2 = np.zeros(shape=(p,1))
   # kernel matrices
   K1 = np.zeros(shape=(p,p))
   K2 = np.zeros(shape=(p,p))
@@ -63,23 +57,39 @@ def M2L(x1,y1,x2,y2,rb,p):
     rq1[i] = radius2 * math.cos(math.pi*2 * i/p) + c1[0]
     zq1[i] = radius2 * math.sin(math.pi*2 * i/p) + c1[1]
 
+  # box 2 upward check surface and downward equivalent surface points
+  for i in range(0,p):
+    rc2[i] = radius1 * math.cos(math.pi*2 * i/p) + c2[0]
+    zc2[i] = radius1 * math.sin(math.pi*2 * i/p) + c2[1]
+    
   # box 2 upward equivalent surface and downward check surface points
   for i in range(0,p):
     rq2[i] = radius2 * math.cos(math.pi*2 * i/p) + c2[0]
     zq2[i] = radius2 * math.sin(math.pi*2 * i/p) + c2[1]
 
+  # upward equivalent surfaces
+  plt.scatter(rq1,zq1,color='red')
+  plt.scatter(rq2,zq2,color='blue')
+  # upward check surfaces
+  plt.scatter(rc1,zc1,color='blue')
+  plt.scatter(rc2,zc2,color='red')
+  plt.grid()
+  plt.show()
+
   # calculate kernel matrices
+  # truncation parameter
+  n=3
   # green's function at rq1,zq1 on down check surf & rq2,zq2 on up equiv surf
   # p x p matrix, used to find down check potential for box 1
   for i in range(0,p):
     for j in range(0,p):
-      K1[i,j] = Laplace2D(rq1[i],zq1[i],rq2[j],zq2[j])
+      K1[i,j] = LaplaceF2D(rq1[i],zq1[i],rq2[j],zq2[j],n)
 
   # green's function at rq1,zq1 on down check surf & rc1,zc1 on down equiv surf
   # p x p matrix, used to solve integral eqn for down equiv density of box 1
   for i in range(0,p):
     for j in range(0,p):
-      K2[i,j] = Laplace2D(rq1[i],zq1[i],rc1[j],zc1[j])
+      K2[i,j] = LaplaceF2D(rq1[i],zq1[i],rc1[j],zc1[j],n)
 
   # The M2L operator translating up equiv density of box 2
   # to down equiv density of box 1 is this matrix:
@@ -89,4 +99,4 @@ def M2L(x1,y1,x2,y2,rb,p):
 
 #import sys
 #sys.stdout = open("/Users/HomeBase/Github/algorithm/output.txt","w")
-print(M2L(0.5,0,1,0,.125,7))
+print(M2L(1,0,5,1,0.5,10))

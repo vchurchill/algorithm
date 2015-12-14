@@ -2,16 +2,9 @@
 import numpy as np
 import numpy.linalg
 import numpy.matlib
+from functions import *
 import math
 import matplotlib.pyplot as plt
-
-# define tikhonov regularization function
-def tikh(M,p):
-  # regularization parameter
-  alpha = np.power(10,-12)
-  # identity matrix
-  I = np.matlib.identity(p)
-  return np.dot(np.linalg.inv(alpha*I+np.dot(np.matrix.transpose(M),M)),np.matrix.transpose(M))
 
 # N is the number of sources in each box
 N1 = 20
@@ -94,27 +87,28 @@ plt.scatter(rq1,zq1,color='red')
 plt.scatter(rc1,zc1,color='blue')
 # point
 plt.scatter(point[0],point[1],color='green')
-#plt.show()
+plt.grid()
+plt.show()
 
 # calculate kernel matrices
 
 # green's function at rc1,zc1 on the upward check surface and rs1,zs1 sources
 for i in range(0,p):
   for j in range(0,N1):
-    K1[i,j] = (1/(2*math.pi))*np.log(math.sqrt(np.square(rc1[i]-rs1[j])+np.square(zc1[i]-zs1[j])))
+    K1[i,j] = Laplace2D(rc1[i],zc1[i],rs1[j],zs1[j])
 
 # green's function at point and rs1,zs1 sources
 for j in range(0,N1):
-  K2[j] = (1/(2*math.pi))*np.log(math.sqrt(np.square(point[0]-rs1[j])+np.square(point[1]-zs1[j])))
+  K2[j] = Laplace2D(point[0],point[1],rs1[j],zs1[j])
 
 # green's function at rc1,zc1 on the upward check surface & rq1,zq1 on upward equivalent surface
 for i in range(0,p):
   for j in range(0,p):
-    K3[i,j] = (1/(2*math.pi))*np.log(math.sqrt(np.square(rc1[i]-rq1[j])+np.square(zc1[i]-zq1[j])))
+    K3[i,j] = Laplace2D(rc1[i],zc1[i],rq1[j],zq1[j])
 
 # green's function at point and rq1,zq1 on upward equivalent surface
 for i in range(0,p):
-  K4[i] = (1/(2*math.pi))*np.log(math.sqrt(np.square(point[0]-rq1[j])+np.square(point[1]-zq1[j])))
+  K4[i] = Laplace2D(point[0],point[1],rq1[j],zq1[j])
 
 # now solve for the upward check potentials
 q1u = np.dot(K1,phi1)
