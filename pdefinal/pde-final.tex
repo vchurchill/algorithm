@@ -1,0 +1,89 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage[pdftex,bookmarks=true]{hyperref}
+\usepackage{array}
+\usepackage[parfill]{parskip}
+\usepackage{multirow}
+\usepackage{framed}
+\usepackage{csquotes}
+\usepackage{alltt}
+\usepackage{cancel}
+\usepackage{breakurl}
+\usepackage{wrapfig}
+\usepackage{comment}
+\usepackage{units}
+\usepackage{fancybox}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{arrows}
+\usetikzlibrary{pgfplots.groupplots}
+\usetikzlibrary{matrix,positioning}
+\usepackage{tkz-euclide}
+\usetkzobj{all}
+
+\captionsetup[subfigure]{labelformat=empty, labelsep=none}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.2mm}}
+\begin{titlepage}
+\title{\vspace{-3ex}
+{\bf \Large PDE I Final HW} \vspace{-1ex}}
+\author{Victor Churchill}
+\date{}
+\end{titlepage}
+\begin{document}
+\maketitle
+
+
+$\mathbf{II}$
+\begin{enumerate}
+\item We can write the smooth solution $u=\sum\limits_kc_ke^{-\lambda_kt}w_k$ for $\lambda_k\le\lambda_{k+1}$ eigenvalues of the $-\Delta$ operator with zero Dirichlet boundary conditions, $w_k$ are the corresponding eigenfuctions, and $c_k=\int_\Omega g(x)w_k(x)dx$ are the Fourier coefficients with respect to the orthonormal basis $(w_k)_k$.
+
+Multiplying $(10)$ by $u$, we have:
+\begin{center}
+$u\partial_tu-u\Delta u +uf(u)=0$
+\end{center}
+Plugging in, we have:
+\begin{center}
+$\sum\limits_kc_ke^{-\lambda_kt}w_k(x)[\partial_t\sum\limits_kc_ke^{-\lambda_kt}w_k(x)]-\sum\limits_kc_ke^{-\lambda_kt}w_k(x)[\Delta\sum\limits_kc_ke^{-\lambda_kt}w_k(x)]+\sum\limits_kc_ke^{-\lambda_kt}w_k(x)f(\sum\limits_kc_ke^{-\lambda_kt}w_k(x))=0$\\
+$-\sum\limits_k\lambda_kc_k^2e^{-2\lambda_kt}w_k(x)-\sum\limits_kc_ke^{-\lambda_kt}w_k(x)[\Delta\sum\limits_kc_ke^{-\lambda_kt}w_k(x)]+\sum\limits_kc_ke^{-\lambda_kt}w_k(x)f(\sum\limits_kc_ke^{-\lambda_kt}w_k(x))=0$\\
+$\implies \beta ||u||_{L^2}^2 + B[u,u]+uf(u)=0$\\
+\end{center}
+for some constant $\beta$.
+
+It makes sense intuitively that the function decreases. Multiplying $(10)$ by $\partial_tu$, we have:
+\begin{center}
+$(\partial_tu)^2-\partial_tu\Delta u +\partial_tuf(u)=0$
+\end{center}
+The decreasing nature of $E(u)$ is furthermore clear when we consider the Poincare inequality:
+\begin{center}
+$\int_\Omega|u|^2dx\le C\int_\Omega|\nabla u|^2dx$
+\end{center}
+We need to show that the gradient is less than $0$.
+
+\item 
+
+\item \begin{enumerate}
+\item 
+
+\end{enumerate}
+
+
+First, let ${w_k}$ be the complete set of appropriately normalized eigenfunctions for $-\Delta$, which is an orthonormal basis of $L^2(\Omega)$ and $H_0^1(\Omega)$.
+
+Write the smooth solution $u=\sum\limits_kc_kw_k$. Note here that $(\: , \:)$ denotes the $L^2$ inner product. The $u$ satisfies:
+\begin{center}
+$(\partial_tu,w_k)+B[u,w_k;t]+f(u)=0$
+\end{center}
+
+\end{enumerate}
+
+
+
+\end{document}
