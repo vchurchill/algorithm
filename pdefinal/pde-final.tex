@@ -40,50 +40,241 @@
 \begin{document}
 \maketitle
 
+I chose the second problem.
 
 $\mathbf{II}$
 \begin{enumerate}
-\item We can write the smooth solution $u=\sum\limits_kc_ke^{-\lambda_kt}w_k$ for $\lambda_k\le\lambda_{k+1}$ eigenvalues of the $-\Delta$ operator with zero Dirichlet boundary conditions, $w_k$ are the corresponding eigenfuctions, and $c_k=\int_\Omega g(x)w_k(x)dx$ are the Fourier coefficients with respect to the orthonormal basis $(w_k)_k$.
-
-Multiplying $(10)$ by $u$, we have:
-\begin{center}
-$u\partial_tu-u\Delta u +uf(u)=0$
-\end{center}
-Plugging in, we have:
-\begin{center}
-$\sum\limits_kc_ke^{-\lambda_kt}w_k(x)[\partial_t\sum\limits_kc_ke^{-\lambda_kt}w_k(x)]-\sum\limits_kc_ke^{-\lambda_kt}w_k(x)[\Delta\sum\limits_kc_ke^{-\lambda_kt}w_k(x)]+\sum\limits_kc_ke^{-\lambda_kt}w_k(x)f(\sum\limits_kc_ke^{-\lambda_kt}w_k(x))=0$\\
-$-\sum\limits_k\lambda_kc_k^2e^{-2\lambda_kt}w_k(x)-\sum\limits_kc_ke^{-\lambda_kt}w_k(x)[\Delta\sum\limits_kc_ke^{-\lambda_kt}w_k(x)]+\sum\limits_kc_ke^{-\lambda_kt}w_k(x)f(\sum\limits_kc_ke^{-\lambda_kt}w_k(x))=0$\\
-$\implies \beta ||u||_{L^2}^2 + B[u,u]+uf(u)=0$\\
-\end{center}
-for some constant $\beta$.
-
-It makes sense intuitively that the function decreases. Multiplying $(10)$ by $\partial_tu$, we have:
-\begin{center}
-$(\partial_tu)^2-\partial_tu\Delta u +\partial_tuf(u)=0$
-\end{center}
-The decreasing nature of $E(u)$ is furthermore clear when we consider the Poincare inequality:
-\begin{center}
-$\int_\Omega|u|^2dx\le C\int_\Omega|\nabla u|^2dx$
-\end{center}
-We need to show that the gradient is less than $0$.
-
 \item 
+
+To obtain an equation with $||u||^2_{L^2}$, we multiply $(10)$ by $u$ and strategically simplify to get
+
+\begin{align}
+\big(\frac{1}{2}u^2\big)_t+|\nabla u|^2-\nabla \cdot(u\nabla u)+uf(u)=0
+\end{align}
+
+Integrating over $\Omega$ and using the divergence theorem and our boundary condition yields:
+
+\begin{align}
+\frac{1}{2}\frac{d}{dt}||u||_{L^2}^2+||\nabla u||^2_{L^2}+\int_\Omega u f(u)dx=0
+\end{align}
+
+This is our equation with $||u||^2_{L^2}$.
+
+Now we must show $E(u)$ is decreasing. To show $E(u)$ is decreasing, we need to show $\partial_t\big[E(u)\big]\le 0$. Start with:
+
+\begin{align}
+E(u)&=\frac{1}{2}\int_\Omega\nabla u \nabla u dx+ \int_\Omega F(u)dx\\
+&=-\frac{1}{2}\int_\Omega u\Delta u dx + \int_\Omega F(u)dx
+\end{align}
+
+Taking the derivative of that equation with respect to time, we have:
+
+\begin{align}
+\frac{d}{dt}E(u)&=-\frac{1}{2}\int_\Omega [u_t\Delta u + u\Delta u_t]dx +\int_\Omega u_tF'(u)dx\\
+&=\int_\Omega \big[-u_t\Delta u+ u_tf(u)\big]dx
+\end{align}
+
+Now we need to use the given info. Multiplying $(10)$ by $u_t$ and integrating over $\Omega$, we have:
+
+\begin{align}
+\int_\Omega\big[u_t^2-u_t\Delta u +u_tf(u)\big]dx=0
+\end{align}
+
+This means that:
+
+\begin{align}
+\frac{d}{dt}E(u)=-\int_\Omega u_t^2dx \implies \frac{d}{dt}E(u)\le 0
+\end{align}
+
+as desired. Therefore $E(u)$ is decreasing.
+
+\item We assume $g\in L^2(\Omega)$. Since $|f(u)|\le C(1+|u|)$, then $|uf(u)|$ is less than or equal to a polynomial of degree $2$ with positive leading coefficient. So there exist constants $\alpha>0$, $\beta\ge0$ such that
+
+\begin{align}
+\alpha||u||^2_{L^2}\le\int_\Omega uf(u)dx + \beta
+\end{align}
+
+Therefore we have
+
+\begin{align}
+\frac{1}{2}\sup_{[0,T]}||u||^2_{L^2} + \int_0^T||\nabla u||^2_{L^2}dt +\alpha\int_0^T||u||_{L^2}^2dt \le\beta T+\frac{1}{2}||g||^2_{L^2}
+\end{align}
+
+Note if $||u||_{L^2}\le\infty$ then $||f(u)||_{L^2}\le\infty$ since
+
+\begin{align}
+\int_\Omega |f(u)|^2dx\le \alpha\int_\Omega|u|^2dx+\beta\le\alpha||u||_{L^2}+\beta
+\end{align}
+
+So in forming a weak solution we use test functions: $v\in H_0^1(\Omega)\cap L^2(\Omega)$ such that $(\nabla u, \nabla v)_{L^2}$ and $(f(u),v)_{L^2}$ are well-defined.
+
+The Galerkin approximations $\{u_m\}$ take values in a finite dimensional subspace $E_m\subset H_0^1(\Omega)\cap L^2(\Omega)$ and satisfy the following with $P_m$ the projection of $E_m$ onto $L^2(\Omega)$
+
+\begin{align}
+(u_m)_t=\Delta u_m + P_m f(u_m)
+\end{align}
+
+Similar to the solution $u$, these approximations satisfy
+
+\begin{align}
+\frac{1}{2}\sup_{[0,T]}||u_m||^2_{L^2} + \int_0^T||\nabla u_m||^2_{L^2}dt +\alpha\int_0^T||u_m||_{L^2}^2dt \le\beta T+\frac{1}{2}||g||^2_{L^2}
+\end{align}
+
+The Galerkin ODEs have a unique local solution since the nonlinear terms are Lipschitz continuous functions of $u_m$. Furthermore, the local solutions are bounded, and so they exist globally for all times $t\ge0$.
+
+Since our estimates hold uniformly for $m$, we can pick a subsequence that weakly converges $u_m\rightarrow u$ to a limiting function
+
+\begin{align}
+u\in L^\infty(0,T;L^2(\Omega))\cap L^2(0,T;H^1_0)\cap L^2(0,T;L^2)
+\end{align}
+
+And furthermore we can say that $u_t\in L^2(0,T;H^{-1})+ L^2(0,T;L^2)$.
+
+Now we need to show that this $u$ is actually a solution of the original PDE. To do this, we must show $f(u_m)\rightarrow f(u)$. We find some subsequence of $u_m$ such that $u_m\rightarrow u$ strongly in $L^2(0,T;L^2)$, which is the same as a strong $L^2$ convergence for $\Omega \times (0,T)$. By the Riesz-Fisher theorem, we can then extract a subsequence such that $u_m(x,t)\rightarrow u(x,t)$ pointwise on $\Omega \times (0,T)$. Then we use the dominated convergence theorem and the uniform bounds of $u_m$ to find that for every test function $v\in H_0^1(\Omega)\cap L^2(\Omega)$
+
+\begin{align}
+(f(u_m(t)),v)_{L^2}\rightarrow(f(u(t)),v)_{L^2}
+\end{align}
+
+pointwise on $[0,T]$.
+
+So here we've shown that the PDE has a global unique weak solution with the desired properties.
+
 
 \item \begin{enumerate}
-\item 
+\item Now we have $g\in H_0^1(\Omega)$ and $uf(u)$ is a monomial of degree $p+1$ with $1<p<5$ and leading coefficient $\lambda$.
+
+There exist constants $\alpha>0$, $\beta\ge0$ such that
+
+\begin{align}
+\alpha||u||^2_{L^{p+1}}\le\int_\Omega uf(u)dx + \beta
+\end{align}
+
+Therefore we have
+
+\begin{align}
+\frac{1}{2}\sup_{[0,T^*)}||u||^2_{L^{2}} + \int_0^{T^*}||\nabla u||^2_{L^{2}}dt +\alpha\int_0^{T^*}||u||_{L^{p+1}}^2dt \le\beta T^*+\frac{1}{2}||g||^2_{H_0^1}
+\end{align}
+
+Note if $||u||_{L^{p+1}}\le\infty$ then $||f(u)||_{L^{\frac{p+1}{p}}}\le\infty$ since
+
+\begin{align}
+\int_\Omega |f(u)|^{\frac{p+1}{p}}dx\le \alpha\int_\Omega|u|^{p+1}dx+\beta\le\alpha||u||_{L^{p+1}}+\beta
+\end{align}
+
+Note that we use $\frac{p+1}{p}$ in this case since it is the Holder conjugate of $p+1$. So in forming a weak solution we use test functions: $v\in H_0^1(\Omega)\cap L^{p+1}(\Omega)$ such that $(\nabla u, \nabla v)_{L^2}$ and $(f(u),v)_{L^2}$ are well-defined.
+
+The Galerkin approximations $\{u_m\}$ take values in a finite dimensional subspace $E_m\subset H_0^1(\Omega)\cap L^{p+1}(\Omega)$ and satisfy the following with $P_m$ the projection of $E_m$ onto $L^2(\Omega)$
+
+\begin{align}
+(u_m)_t=\Delta u_m + P_m f(u_m)
+\end{align}
+
+Similar to the solution $u$, these approximations satisfy
+
+\begin{align}
+\frac{1}{2}\sup_{[0,T^*)}||u_m||^2_{L^2} + \int_0^{T^*}||\nabla u_m||^2_{L^2}dt +\alpha\int_0^{T^*}||u_m||_{L^{p+1}}^2dt \le\beta T^*+\frac{1}{2}||g||^2_{H_0^1}
+\end{align}
+
+The Galerkin ODEs have a unique local solution since the nonlinear terms are Lipschitz continuous functions of $u_m$. Furthermore, the local solutions are bounded, and so they exist globally for all times $t\ge0$.
+
+Since our estimates hold uniformly for $m$, we can pick a subsequence that weakly converges $u_m\rightarrow u$ to a limiting function
+
+\begin{align}
+u\in L^\infty([0,T^*);H_0^1\cap L^{p+1}(\Omega))\cap L^2([0,T^*);H^1_0)\cap L^{p+1}([0,T^*)\times\Omega)
+\end{align}
+
+Now we need to show that this $u$ is actually a solution of the original PDE. To do this, we must show $f(u_m)\rightarrow f(u)$. We find some subsequence of $u_m$ such that $u_m\rightarrow u$ strongly in $L^{p+1}([0,T^*)\times\Omega)$. By the Riesz-Fisher theorem, we can then extract a subsequence such that $u_m(x,t)\rightarrow u(x,t)$ pointwise on $[0,T^*)\times\Omega$. Then we use the dominated convergence theorem and the uniform bounds of $u_m$ to find that for every test function $v\in H_0^1(\Omega)\cap L^{p+1}(\Omega)$
+
+\begin{align}
+(f(u_m(t)),v)_{L^2}\rightarrow(f(u(t)),v)_{L^2}
+\end{align}
+
+pointwise on $[0,T^*)$.
+
+So here we've shown that the PDE has a global unique weak solution with the desired properties. In particular, $T^* >0$ exists.
+
+\item So part $(a)$ shows that there exists a unique solution defined on some maximal time interval $[0,T^*)$, $u\in L^\infty([0,T^*);H_0^1\cap L^{p+1}(\Omega))$ for all $T<T^*$. For $\lambda\ge0$,this means there is a potential blowup: either $T^*=+\infty$ or $T^*<\infty$ and $||u||_{L^\infty}\rightarrow\infty$ as $t\rightarrow T^*$. However $||u||_{L^\infty}$ is bounded, so $T^*=+\infty$.
+
+\item \begin{enumerate}
+\item First, $-4E(g)=-2||\nabla g||^2_{L^2(\Omega)}-4\int_\Omega F(g)dx > 0$. Also $y^{\frac{p+1}{2}}=||u||^{p+1}_{L^2(\Omega)}$. Lastly, $\dot y=2u_t||u||_{L^2(\Omega)}$.
+
+We also need to use Holder's inequality $||f||_p||g||_q\ge||fg||_1$ is $\frac{1}{p}+\frac{1}{q}=1$, and also $\int_\Omega |f(x)g(x)|dx\le (\int_\Omega|f(x)|^pdx)^{\frac{1}{p}}(\int_\Omega|g(x)|^qdx)^{\frac{1}{q}}$.
+
+Maybe an exponential function?
+
+Unfortunately not sure where to take it from here.
+
+\item For this to be true we would need $2\int_\Omega F(g)dx < -||\nabla g||^2_{L^2(\Omega)}$.
+
+\end{enumerate}
 
 \end{enumerate}
 
 
-First, let ${w_k}$ be the complete set of appropriately normalized eigenfunctions for $-\Delta$, which is an orthonormal basis of $L^2(\Omega)$ and $H_0^1(\Omega)$.
+\item \begin{enumerate}
+\item We have $g\in L^2(\Omega)$ and $uf(u)$ is some $p+1$ degree monomial with $1<p<5$ and positive leading coefficient $\lambda$.
 
-Write the smooth solution $u=\sum\limits_kc_kw_k$. Note here that $(\: , \:)$ denotes the $L^2$ inner product. The $u$ satisfies:
-\begin{center}
-$(\partial_tu,w_k)+B[u,w_k;t]+f(u)=0$
-\end{center}
+There exist constants $\alpha>0$, $\beta\ge0$ such that
+
+\begin{align}
+\alpha||u||^2_{L^{p+1}}\le\int_\Omega uf(u)dx + \beta
+\end{align}
+
+Therefore we have
+
+\begin{align}
+\frac{1}{2}\sup_{[0,T]}||u||^2_{L^{2}} + \int_0^T||\nabla u||^2_{L^{2}}dt +\alpha\int_0^T||u||_{L^{p+1}}^2dt \le\beta T+\frac{1}{2}||g||^2_{L^2}
+\end{align}
+
+Note if $||u||_{L^{p+1}}\le\infty$ then $||f(u)||_{L^{\frac{p+1}{p}}}\le\infty$ since
+
+\begin{align}
+\int_\Omega |f(u)|^{\frac{p+1}{p}}dx\le \alpha\int_\Omega|u|^{p+1}dx+\beta\le\alpha||u||_{L^{p+1}}+\beta
+\end{align}
+
+Note that we use $\frac{p+1}{p}$ in this case since it is the Holder conjugate of $p+1$. So in forming a weak solution we use test functions: $v\in H_0^1(\Omega)\cap L^{p+1}(\Omega)$ such that $(\nabla u, \nabla v)_{L^2}$ and $(f(u),v)_{L^2}$ are well-defined.
+
+The Galerkin approximations $\{u_m\}$ take values in a finite dimensional subspace $E_m\subset H_0^1(\Omega)\cap L^{p+1}(\Omega)$ and satisfy the following with $P_m$ the projection of $E_m$ onto $L^2(\Omega)$
+
+\begin{align}
+(u_m)_t=\Delta u_m + P_m f(u_m)
+\end{align}
+
+Similar to the solution $u$, these approximations satisfy
+
+\begin{align}
+\frac{1}{2}\sup_{[0,T]}||u_m||^2_{L^2} + \int_0^T||\nabla u_m||^2_{L^2}dt +\alpha\int_0^T||u_m||_{L^{p+1}}^2dt \le\beta T+\frac{1}{2}||g||^2_{L^2}
+\end{align}
+
+The Galerkin ODEs have a unique local solution since the nonlinear terms are Lipschitz continuous functions of $u_m$. Furthermore, the local solutions are bounded, and so they exist globally for all times $t\ge0$.
+
+Since our estimates hold uniformly for $m$, we can pick a subsequence that weakly converges $u_m\rightarrow u$ to a limiting function
+
+\begin{align}
+u\in L^\infty(0,T;L^2(\Omega))\cap L^2(0,T;H^1_0)\cap L^{p+1}((0,T)\times\Omega)
+\end{align}
+
+And furthermore we can say that $u_t\in L^2(0,T;H^{-1})+ L^\frac{p+1}{p}((0,T)\times\Omega)$.
+
+Now we need to show that this $u$ is actually a solution of the original PDE. To do this, we must show $f(u_m)\rightarrow f(u)$. We find some subsequence of $u_m$ such that $u_m\rightarrow u$ strongly in $L^{p+1}((0,T)\times\Omega)$. By the Riesz-Fisher theorem, we can then extract a subsequence such that $u_m(x,t)\rightarrow u(x,t)$ pointwise on $(0,T)\times\Omega$. Then we use the dominated convergence theorem and the uniform bounds of $u_m$ to find that for every test function $v\in H_0^1(\Omega)\cap L^{p+1}(\Omega)$
+
+\begin{align}
+(f(u_m(t)),v)_{L^2}\rightarrow(f(u(t)),v)_{L^2}
+\end{align}
+
+pointwise on $[0,T]$.
+
+So here we've shown that the PDE has a global unique weak solution with the desired properties.
+
+\item Following the same proof above for a $g\in H_0^1\cap L^{p+1}$ and for every $T>0$ we will get a unique solution $u\in L^\infty(0,T;H_0^1\cap L^{p+1}(\Omega))\cap L^2(0,T;H^1_0)\cap L^{p+1}((0,T)\times\Omega)$ which of course means $u\in L^\infty(0,T;H_0^1\cap L^{p+1}(\Omega))$. Perhaps I missed the point of this question and there is some property about the $H_0^1$ space that makes the conclusion clear from the above result.
+
+\item For both $(a)$ and $b$, I believe yes uniqueness is possible, as in my proofs.
 
 \end{enumerate}
 
+\end{enumerate}
 
+Thanks for a great semester! Happy New Year!
 
 \end{document}
