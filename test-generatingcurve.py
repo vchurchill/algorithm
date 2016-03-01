@@ -55,8 +55,6 @@ N2 = len(sources2)
 p = 10
 #(N1+N2)
 
-print(p)
-
 # just did random integers from 0 to 10
 phi1 = np.random.randint(10, size=(N1,1))
 phi2 = np.random.randint(10, size=(N2,1))
