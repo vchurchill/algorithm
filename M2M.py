@@ -65,13 +65,13 @@ def M2M(x1,y1,x2,y2,rb,p):
     zq2[i] = radius2 * math.sin(math.pi*2 * i/p) + c2[1]
 
   # upward equivalent surfaces
-  plt.scatter(rq1,zq1,color='red')
-  plt.scatter(rq2,zq2,color='red')
+  #plt.scatter(rq1,zq1,color='red')
+  #plt.scatter(rq2,zq2,color='red')
   # upward check surfaces
-  plt.scatter(rc1,zc1,color='blue')
-  plt.scatter(rc2,zc2,color='blue')
-  plt.grid()
-  plt.show()
+  #plt.scatter(rc1,zc1,color='blue')
+  #plt.scatter(rc2,zc2,color='blue')
+  #plt.grid()
+  #plt.show()
 
 
 
@@ -81,13 +81,16 @@ def M2M(x1,y1,x2,y2,rb,p):
   # green's function at rc1,zc1 on up check surf & rq2,zq2 on up equiv surface
   for i in range(0,p):
     for j in range(0,p):
-      K1[i,j] = LaplaceF2D(rc1[i],zc1[i],rq2[j],zq2[j],n)
+      K1[i,j] = LaplaceMode(rc1[i],zc1[i],rq2[j],zq2[j],n)
 
   # green's function at rq1,zq1 on up equiv surf & rc1,zc1 on up check surf
   for i in range(0,p):
     for j in range(0,p):
-      K2[i,j] = LaplaceF2D(rq1[i],zq1[i],rc1[j],zc1[j],n)
+      K2[i,j] = LaplaceMode(rq1[i],zq1[i],rc1[j],zc1[j],n)
 
+  print(K1)
+  print(K2)
+  
   # now use Tikhonov regularization
   # regularization parameter
   alpha = np.power(10,-12)
@@ -95,6 +98,6 @@ def M2M(x1,y1,x2,y2,rb,p):
   I = np.matlib.identity(p)
   # This matrix translates the upward equivalent density of a box 2
   # to the upward equivalent density of its parent box 1
-  return np.dot(tikh(K2,p),K1)
+  return np.dot(np.linalg.inv(K2),K1)
 
-print(M2M(0,0,0,0,0.5,10))
+print(M2M(4,4,4,4,1,10))

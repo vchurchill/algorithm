@@ -65,12 +65,12 @@ def L2L(x1,y1,x2,y2,rb,p):
     zq2[i] = radius2 * math.sin(math.pi*2 * i/p) + c2[1]
 
   # down check surfaces
-  plt.scatter(rq1,zq1,color='blue')
-  plt.scatter(rq2,zq2,color='blue')
+  #plt.scatter(rq1,zq1,color='blue')
+  #plt.scatter(rq2,zq2,color='blue')
   # down equiv surfaces
-  plt.scatter(rc1,zc1,color='red')
-  plt.scatter(rc2,zc2,color='red')
-  plt.show()
+  #plt.scatter(rc1,zc1,color='red')
+  #plt.scatter(rc2,zc2,color='red')
+  #plt.show()
 
   # calculate kernel matrices
   # truncation parameter
@@ -78,20 +78,16 @@ def L2L(x1,y1,x2,y2,rb,p):
   # green's function at rc1,zc1 on down equiv surf & rq2,zq2 on down check surface
   for i in range(0,p):
     for j in range(0,p):
-      K1[i,j] = LaplaceF2D(rq2[i],zq2[i],rc1[j],zc1[j],n)
+      K1[i,j] = LaplaceMode(rq2[i],zq2[i],rc1[j],zc1[j],n)
 
   # green's function at rq1,zq1 on down check surf & rc1,zc1 on down equiv surf
   for i in range(0,p):
     for j in range(0,p):
-      K2[i,j] = LaplaceF2D(rq2[i],zq2[i],rc2[j],zc2[j],n)
+      K2[i,j] = LaplaceMode(rq2[i],zq2[i],rc2[j],zc2[j],n)
 
-  # now use Tikhonov regularization
-  # regularization parameter
-  alpha = np.power(10,-12)
-  # identity matrix
-  I = np.matlib.identity(p)
-  # This matrix translates the upward equivalent density of a box 2
-  # to the upward equivalent density of its parent box 1
-  return np.dot(tikh(K2,p),K1)
+  print(K1)
+  print(K2)
 
-print(L2L(0,0,0,0,1,16))
+  return np.dot(np.linalg.inv(K2),K1)
+
+print(L2L(4,4,4,4,1,10))
