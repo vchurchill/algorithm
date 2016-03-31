@@ -28,9 +28,3 @@ def tikh(M,p):
   # identity matrix
   I = np.matlib.identity(p)
   return np.dot(np.linalg.inv(alpha*I+np.dot(np.matrix.transpose(M),M)),np.matrix.transpose(M))
-
-
-def T(n,x):
-  T(0,x)=1
-  T(1,x)=x
-  return 2*x*T(n-1,x)-T(n-2,x)
