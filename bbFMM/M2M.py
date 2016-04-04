@@ -57,18 +57,19 @@ for i in range(0,n*n):
 plt.grid()
 plt.show()
 
-print(nodes(0,1))
+#print(nodes(0,1))
 
 def M2M(m1,m2):
   M1 = np.zeros(shape=(n,n))
   M2 = np.zeros(shape=(n,n))
   M3 = np.zeros(shape=(n,n))
   M4 = np.zeros(shape=(n,n))
-  for i in range(0,n):
-    M1[i,i]=R(n,chebynodes(0,2)[m1],chebynodes(0,2)[m2],nodes(0,1)[i,0],nodes(0,1)[i,1])
-    M2[i,i]=R(n,chebynodes(0,2)[m1],chebynodes(0,2)[m2],nodes(0,1)[i,0],nodes(1,2)[i,1])
-    M3[i,i]=R(n,chebynodes(0,2)[m1],chebynodes(0,2)[m2],nodes(1,2)[i,0],nodes(0,1)[i,1])
-    M4[i,i]=R(n,chebynodes(0,2)[m1],chebynodes(0,2)[m2],nodes(1,2)[i,0],nodes(1,2)[i,1])
+  for j in range(0,n):
+    for i in range(0,n):
+      M1[i,j]=R(n,chebynodes(0,2)[m1],chebynodes(0,2)[m2],chebynodes(0,1)[i],chebynodes(0,1)[j])
+      M2[i,j]=R(n,chebynodes(0,2)[m1],chebynodes(0,2)[m2],chebynodes(0,1)[i],chebynodes(1,2)[j])
+      M3[i,j]=R(n,chebynodes(0,2)[m1],chebynodes(0,2)[m2],chebynodes(1,2)[i],chebynodes(0,1)[j])
+      M4[i,j]=R(n,chebynodes(0,2)[m1],chebynodes(0,2)[m2],chebynodes(1,2)[i],chebynodes(1,2)[j])
   return np.concatenate((M1,M2,M3,M4),axis=0)
 
 print(M2M(3,4))
