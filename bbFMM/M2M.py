@@ -5,7 +5,6 @@ import numpy.matlib
 import math
 import matplotlib.pyplot as plt
 from numpy import *
-from functions import *
 
 # of interpolation nodes
 n=5
@@ -29,17 +28,18 @@ def S(n,x,y):
 
   return 1/n + (2/n)*sum
 
-# define vector version of S -- Chebyshev polynomial function
+# define multivariable version of above S function
 def R(n,r1,z1,r2,z2):
   return S(n,r1,r2)*S(n,z1,z2)
 
-# chebyshev nodes in interval a,b
+# define function to compute chebyshev nodes in interval a,b
 def chebynodes(a,b):
   nodes = np.zeros(shape=(n,1))
   for i in range(0,n):
     nodes[i]=(a+b)/2 + ((b-a)/2)*np.cos(((2*(i+1)-1)*math.pi)/(2*n))
   return nodes
 
+# define function to calculate 2D interpolation nodes in a box [a,b]x[a,b]
 def nodes(a,b):
   nodes =  np.zeros(shape=(n*n,2))
   for j in range(0,n):
@@ -48,6 +48,7 @@ def nodes(a,b):
       nodes[i+j*n,1] = nodes[j,0]
   return nodes
 
+# plot the interpolation nodes in 2D
 for i in range(0,n*n):
   plt.scatter(nodes(0,1)[i,0],nodes(0,1)[i,1],color='red')
   plt.scatter(nodes(0,1)[i,0],nodes(1,2)[i,1],color='yellow')
@@ -57,8 +58,9 @@ for i in range(0,n*n):
 plt.grid()
 plt.show()
 
-#print(nodes(0,1))
-
+# define multipole-to-multipole translation operator
+#
+# M1 is 
 def M2M(m1,m2):
   M1 = np.zeros(shape=(n,n))
   M2 = np.zeros(shape=(n,n))
@@ -74,6 +76,8 @@ def M2M(m1,m2):
 
 print(M2M(3,4))
 
+
+# other testing
 #print(T(5,chebynodes[0]))
 #print(T(1,5))
 #print(T(1,10))
