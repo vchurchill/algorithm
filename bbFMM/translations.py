@@ -77,6 +77,12 @@ plot(0,1,0,1)
 # note how there are n^2 M2M matrices per box, one for each
 # m1,m2 combo which represents the weight at each of the n^2 nodes in the box
 
+
+'''
+THINK ABOUT for in range(0,n)=# of levels, do M2M(i*a/n,i*b/n,...) for computing all
+M2Ms and L2Ls!
+'''
+
 def M2M(m1,m2,a,b,c,d,r):
   M = np.zeros(shape=(n,n))
   for i in range(0,n):
@@ -135,6 +141,10 @@ def k(m,r1,z1,r2,z2):
 #
 # m is the number Fourier mode
 #
+
+'''
+Think about interaction list for M2L, is it only boxes of same size? No!
+'''
 def M2L(m,k1,k2,a,b,c,d,e,f,g,h):
   K=np.zeros(shape=(n,n))
   if i in range(0,n):
