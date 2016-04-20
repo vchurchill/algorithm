@@ -130,71 +130,38 @@ def X(r1,z1,r2,z2):
 def k(m,r1,z1,r2,z2):
   return (1/np.sqrt(8*np.pi*np.pi*np.pi*r1*r2))*np.sqrt(np.pi)*np.power(2,(-n-1/2))*scipy.special.gamma(n+1/2)*np.power(X(r1,z1,r2,z2),(-n-1/2))*scipy.special.hyp2f1(n/2+3/4,n/2+3/4,n+1,np.power(X(r1,z1,r2,z2),-2))/scipy.special.gamma(n+1)
 
-# define multipole-to-local translation operator
-#
-# (a,b)x(c,d) is the box we want to calculate the weights for
-# (e,f)x(g,h) is the box we already know the weights in
-#
-# these boxes MUST be well separated!
-#
-# again there will be 25 weights per box (1 for each node)
-#
-# m is the number Fourier mode
-#
-
 '''
-Think about interaction list for M2L, is it only boxes of same size? No!
+define multipole-to-local translation operator
+
+(a,b)x(c,d) is the box we want to calculate the weights for
+(e,f)x(g,h) is the box we already know the weights in
+
+these boxes MUST be well separated! (distance at least one box of same size)
+
+again there will be 25 weights per box (1 for each node)
+
+m is the number Fourier mode
+
+When computing all, think interaction list for M2L
 '''
 def M2L(m,k1,k2,a,b,c,d,e,f,g,h):
   K=np.zeros(shape=(n,n))
+  O1=np.zeros(shape=(n,n))
+  O2=np.zeros(shape=(n,n))
   if i in range(0,n):
+    O1[i,i]=((np.pi)/n)*np.sqrt(1-nodes(a,b)[i])
+    O2[i,i]=((np.pi)/n)*np.sqrt(1-nodes(e,f)[i])
     if j in range(0,n):
       K[i,j]=k(m,nodes(a,b)[k1],nodes(c,d)[k2],nodes(e,f)[i],nodes(g,h)[j])
-  return K
-
-# skeletonization stuff
-omega1 = (np.pi/n)*np.sqrt(1)
-
+  return scipy.linalg.sqrtm(O1),K,scipy.linalg.sqrtm(O2)
 
 '''
-print(L2L(2,3,-1,1,-1,1,1))
-print(L2L(2,3,-1,1,-1,1,2))
-print(L2L(2,3,-1,1,-1,1,3))
-print(L2L(2,3,-1,1,-1,1,4))
+after we have every possible matrix for every box, we assemble the K_fat and K_thin
+and use SVD on them to find U and S. THEN we do interpolative decomposition on U and S
+Then U^T_r*O1^1/2*K*O2^1/2*S_r is the M2L for just these two boxes. Or maybe U and S are
+identical for all i. Yes, so only need to find U and S once for each level.
 
-print(M2M(2,3,-1,1,-1,1,1))
-print(M2M(2,3,-1,1,-1,1,2))
-print(M2M(2,3,-1,1,-1,1,3))
-print(M2M(2,3,-1,1,-1,1,4))
-'''
 
-'''
-# define root box
-a=-1
-b=1
-c=-1
-d=1
-# All M2Ms for root box
-for i in range(0,n):
-  for j in range(0,n):
-    print(M2M(i,j,a,b,c,d))
-
-# All M2Ms for children of root box
-for i in range(0,n):
-  for j in range(0,n):
-    print(M2M(i,j,a,(a+b)/2,c,(c+d)/2))
-
-for i in range(0,n):
-  for j in range(0,n):
-    print(M2M(i,j,a,(a+b)/2,(c+d)/2,d))
-
-for i in range(0,n):
-  for j in range(0,n):
-    print(M2M(i,j,(a+b)/2,b,c,(c+d)/2))
-
-for i in range(0,n):
-  for j in range(0,n):
-    print(M2M(i,j,(a+b)/2,b,(c+d)/2,d))
 '''
 
 # other testing
