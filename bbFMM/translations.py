@@ -2,59 +2,9 @@
 import numpy as np
 import numpy.linalg
 import numpy.matlib
-import math
 import matplotlib.pyplot as plt
 from numpy import *
-
-# of interpolation nodes
-n=5
-
-# define Chebyshev polynomial function
-def T(n,x):
-  if n==0:
-    return 1
-  if n==1:
-    return x
-  else:
-    return 2*x*T(n-1,x)-T(n-2,x)
-
-# define other Chebyshev polynomial function
-def S(n,x,y):
-  k=1
-  sum=0
-  while k <= (n-1):
-    sum+=T(k,x)*T(k,y)
-    k+=1
-
-  return 1/n + (2/n)*sum
-
-# define multivariable version of above S function
-def R(n,r1,z1,r2,z2):
-  return S(n,r1,r2)*S(n,z1,z2)
-
-# define function to compute chebyshev nodes in interval a,b
-def nodes(a,b):
-  nodes = np.zeros(shape=(n,1))
-  for i in range(0,n):
-    nodes[i]=(a+b)/2 + ((b-a)/2)*np.cos(((2*(i+1)-1)*math.pi)/(2*n))
-  return nodes
-
-# plot the interpolation nodes in 2D
-#
-# a,b is the x interval and c,d is the y interval
-def plot(a,b,c,d):
-  for i in range(0,n):
-    for j in range(0,n):
-      plt.scatter(nodes(a,(a+b)/2)[i],nodes(c,(c+d)/2)[j],color='red')
-      plt.scatter(nodes(a,(a+b)/2)[i],nodes((c+d)/2,d)[j],color='yellow')
-      plt.scatter(nodes((a+b)/2,b)[i],nodes(c,(c+d)/2)[j],color='blue')
-      plt.scatter(nodes((a+b)/2,b)[i],nodes((c+d)/2,d)[j],color='green')
-      plt.scatter(nodes(a,b)[i],nodes(c,d)[j],color='purple')
-  plt.grid()
-
-plot(0,1,0,1)
-
-#plt.show()
+from functions import *
 
 # define multipole-to-multipole and local-to-local translation operators
 #
@@ -160,15 +110,4 @@ after we have every possible matrix for every box, we assemble the K_fat and K_t
 and use SVD on them to find U and S. THEN we do interpolative decomposition on U and S
 Then U^T_r*O1^1/2*K*O2^1/2*S_r is the M2L for just these two boxes. Or maybe U and S are
 identical for all i. Yes, so only need to find U and S once for each level.
-
-
 '''
-
-# other testing
-#print(T(5,chebynodes[0]))
-#print(T(1,5))
-#print(T(1,10))
-#print(S(2,5,10))
-#print(S(2,3,4))
-#print(R(2,3,5,4,10))
-
