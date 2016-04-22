@@ -39,21 +39,3 @@ def R(n,r1,z1,r2,z2):
 def log(r1,z1,r2,z2):
   return np.log(np.sqrt(np.square(r1-r2)+np.square(z1-z2)))
 
-
-'''
-# plot the interpolation nodes in 2D
-#
-# a,b is the x interval and c,d is the y interval
-def plot(a,b,c,d):
-  for i in range(0,n):
-    for j in range(0,n):
-      plt.scatter(nodes(a,(a+b)/2)[i],nodes(c,(c+d)/2)[j],color='red')
-      plt.scatter(nodes(a,(a+b)/2)[i],nodes((c+d)/2,d)[j],color='yellow')
-      plt.scatter(nodes((a+b)/2,b)[i],nodes(c,(c+d)/2)[j],color='blue')
-      plt.scatter(nodes((a+b)/2,b)[i],nodes((c+d)/2,d)[j],color='green')
-      plt.scatter(nodes(a,b)[i],nodes(c,d)[j],color='purple')
-  plt.grid()
-  plt.show()
-
-plot(0,1,0,1)
-'''
