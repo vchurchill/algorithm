@@ -60,6 +60,9 @@ h = 3
 sources = np.random.rand(N,2) + [a,c]
 print(sources)
 
+
+
+
 # create target
 point = [2.6,2.3]
 
