@@ -4,14 +4,11 @@ import numpy.linalg
 import numpy.matlib
 import matplotlib.pyplot as plt
 
+''' define Chebyshev functions '''
+
 # Chebyshev polynomial function
 def T(n,x):
-  if n==0:
-    return 1
-  if n==1:
-    return x
-  else:
-    return 2*x*T(n-1,x)-T(n-2,x)
+  return np.cos(n*np.arccos(x))
 
 # computes chebyshev nodes in interval a,b
 def nodes(n,a,b):
@@ -19,7 +16,6 @@ def nodes(n,a,b):
   for i in range(0,n):
     nodes[i]=(a+b)/2 + ((b-a)/2)*np.cos(((2*(i+1)-1)*np.pi)/(2*n))
   return nodes
-
 
 # define other Chebyshev polynomial function
 def S(n,x,y):
