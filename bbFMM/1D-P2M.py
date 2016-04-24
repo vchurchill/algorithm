@@ -39,10 +39,12 @@ N = 40
 # n^2 interpolation points in each box
 n=5
 
-''' specify source interval '''
+''' source interval '''
 
 a = -1
 b = 1
+
+''' target interval '''
 c = 11
 d = 13
 
