@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 # Chebyshev polynomial function
 def T(n,x,a,b):
   return np.cos(n*np.arccos(((2/(b-a))*(x-((a+b)/2)))))
-''' note domain of arccos in [-1,1] so that's why this translation is happening '''
+
 # compute Chebyshev nodes in interval -1,1
 def nodes(n,a,b):
   nodes = np.zeros(shape=(n,1))
@@ -18,17 +18,17 @@ def nodes(n,a,b):
   return nodes
 
 # define other Chebyshev polynomial function
-def S(n,x,y,a1,b1,a2,b2):
+def S(n,x,y,a,b):
   k=1
   sum=0
   while k <= (n-1):
-    sum+=T(k,x,a1,b1)*T(k,y,a2,b2)
+    sum+=T(k,x,a,b)*T(k,y,a,b)
     k+=1
   return 1/n + (2/n)*sum
 
 # define multivariable version of above S function
-def R(n,r1,z1,r2,z2,a1,b1,a2,b2):
-  return S(n,r1,r2,a1,b1,a2,b2)*S(n,z1,z2,a1,b1,a2,b2)
+def R(n,r1,z1,r2,z2,a,b,c,d):
+  return S(n,r1,r2,a,b)*S(n,z1,z2,c,d)
 
 # define log kernel
 def log(r1,z1,r2,z2):
@@ -42,18 +42,18 @@ N = 40
 
 # n is the number of Chebyshev nodes in each interval
 # n^2 interpolation points in each box
-n=8
+n=5
 
 ''' specify source interval '''
 
-a1 = -1
-b1 = 1
+a1 = 0
+b1 = 2
 a2 = -1
 b2 = 1
-c1 = 3
-d1 = 5
-c2 = 3
-d2 = 5
+c1 = 4
+d1 = 6
+c2 = 4
+d2 = 6
 
 ''' populate boxes '''
 
@@ -64,19 +64,21 @@ for i in range(0,N):
   sources[i,1] = sources[i,1]*(b2-a2)+a2
 
 # create target
-point = [3.1,3.3]
-'''
+point = [4.1,4.3]
+
 for i in range(0,N):
   plt.scatter(sources[i,0],sources[i,1],color='black')
   plt.scatter(point[0],point[1],color='green')
 plt.grid()
 plt.show()
-'''
+
 # create some charge (density) for each source
 # they can be +1 or -1
 sigma = np.zeros(shape=(N,1))
 for i in range(0,N):
   sigma[i] = (np.random.randint(0,2)*2)-1
+
+''' these are the weights for each box '''
 
 # each Chebyshev node, m, gets a weight
 def W(m1,m2):

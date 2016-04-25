@@ -37,12 +37,12 @@ N = 5
 
 # n is the number of Chebyshev nodes in each interval
 # n^2 interpolation points in each box
-n=10
+n=8
 
 ''' specify source interval '''
 # source parent
-a = -4
-b = -2
+a = 0
+b = 2
 
 # source children
 C1a = a
@@ -69,7 +69,7 @@ sources4 = np.random.rand(N,1)*(C4b-C4a) + C4a
 # create target
 point = 4.5
 
-
+'''
 sourcesy = np.zeros(shape=(N,1))
 plt.scatter(sources1,sourcesy,color='black')
 plt.scatter(sources2,sourcesy,color='red')
@@ -78,7 +78,7 @@ plt.scatter(sources4,sourcesy,color='yellow')
 plt.scatter(point,0,color='green')
 plt.grid()
 plt.show()
-
+'''
 
 # create some charge (density) for each source
 # they can be +1 or -1
@@ -99,10 +99,6 @@ sigma4 = np.zeros(shape=(N,1))
 for i in range(0,N):
   sigma4[i] = (np.random.randint(0,2)*2)-1
 
-print(sigma1)
-print(sigma2)
-print(sigma3)
-print(sigma4)
 ''' these are the weights for each child box '''
 
 # each Chebyshev node, m, gets a weight
@@ -161,3 +157,75 @@ print(wmtm)
 
 for m in range(0,n):
   print(West(m))
+  
+'''
+
+estimate sum to N of f(x)=K(x,y(j))*sigma[j] by sum to n of K(x,y(m))*West(m,a,b)
+def Kest1(l):
+  Kest1 = 0
+  for m in range(0,n):
+    Kest1 += log(nodes(n,c,d)[l],nodes(n,a,b)[m])*West(m)
+  return Kest1
+
+def Kest2(l):
+  Kest2 = 0
+  for m in range(0,n):
+    Kest2 += log(nodes(n,c,d)[l],nodes(n,a,b)[m])*W(m)
+  return Kest2
+
+print("kernel estimate first")
+for l in range(0,n):
+  print(Kest1(l))
+  print(Kest2(l))
+
+fest1 = 0
+for l in range(0,n):
+  fest1 += S(n,nodes(n,c,d)[l],point,c,d)*Kest1(l)
+
+print("Estimated potential 1:")
+print(fest1)
+
+fest2 = 0
+for l in range(0,n):
+  fest2 += S(n,nodes(n,c,d)[l],point,c,d)*Kest1(l)
+
+print("Estimated potential 2:")
+print(fest2)
+
+
+
+ estimate sum to N of f(x)=K(x,y(j))*sigma[j] by sum to n of K(x,y(m))*West(m,a,b)
+fest3 = 0
+for m in range(0,n):
+  fest2 += log(point,nodes(n,a,b)[m])*West(m)
+
+print("Estimated potential 3:")
+print(fest3)
+
+# compute actual sum to N of f(x)=K(x,y(j))*sigma[j]
+fact = 0
+for j in range(0,N):
+  fact += log(point,sources1[j])*sigma1[j] + log(point,sources2[j])*sigma2[j] + log(point,sources3[j])*sigma3[j] + log(point,sources4[j])*sigma4[j]
+
+print("Actual potential:")
+print(fact)
+
+
+print("weight estimate first")
+for m in range(0,n):
+  print(West(m))
+  print(W(m))
+
+Westimate = 0
+for m in range(0,n):
+  Westimate += West(m)
+print("total weight estimate 1")
+print(Westimate)
+
+Wactual = 0
+for m in range(0,n):
+  Wactual += W(m)
+print("total weight estimate 2")
+print(Wactual)
+
+'''
