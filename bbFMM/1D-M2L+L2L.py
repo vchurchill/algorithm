@@ -37,7 +37,7 @@ N = 40
 
 # n is the number of Chebyshev nodes in each interval
 # n^2 interpolation points in each box
-n=8
+n=10
 
 ''' specify source interval '''
 # parent interval
