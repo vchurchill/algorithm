@@ -1,18 +1,15 @@
 # import necessary packages
 import numpy as np
-import numpy.linalg
-import numpy.matlib
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from functions import *
 
-''' specify number of sources per box and number of nodes per interval '''
-
+''' specify source number and node number '''
 # N is the number of sources in each interval
 N = 1
 
 # n is the number of Chebyshev nodes in each interval
 # n^2 interpolation points in each box
-n=6
+n=3
 
 ''' specify boxes '''
 # target box
@@ -202,13 +199,13 @@ C27b2 = 6
 ''' populate boxes '''
 
 # create sources
-sourcesP1 = np.random.rand((2*N),2)
-sourcesP2 = np.random.rand((2*N),2)
-sourcesP3 = np.random.rand((2*N),2)
-sourcesP4 = np.random.rand((2*N),2)
-sourcesP5 = np.random.rand((2*N),2)
-sourcesP6 = np.random.rand((2*N),2)
-sourcesP7 = np.random.rand((2*N),2)
+sourcesP1 = np.random.rand((4*N),2)
+sourcesP2 = np.random.rand((4*N),2)
+sourcesP3 = np.random.rand((4*N),2)
+sourcesP4 = np.random.rand((4*N),2)
+sourcesP5 = np.random.rand((4*N),2)
+sourcesP6 = np.random.rand((4*N),2)
+sourcesP7 = np.random.rand((4*N),2)
 
 sourcesC1 = np.random.rand(N,2)
 sourcesC2 = np.random.rand(N,2)
@@ -238,25 +235,25 @@ sourcesC25 = np.random.rand(N,2)
 sourcesC26 = np.random.rand(N,2)
 sourcesC27 = np.random.rand(N,2)
 
-for i in range(0,(2*N)):
+for i in range(0,(4*N)):
   sourcesP1[i,0] = sourcesP1[i,0]*(P1d1-P1c1)+P1c1
   sourcesP1[i,1] = sourcesP1[i,1]*(P1d2-P1c2)+P1c2
-for i in range(0,(2*N)):
+for i in range(0,(4*N)):
   sourcesP2[i,0] = sourcesP2[i,0]*(P2d1-P2c1)+P2c1
   sourcesP2[i,1] = sourcesP2[i,1]*(P2d2-P2c2)+P2c2
-for i in range(0,(2*N)):
+for i in range(0,(4*N)):
   sourcesP3[i,0] = sourcesP3[i,0]*(P3d1-P3c1)+P3c1
   sourcesP3[i,1] = sourcesP3[i,1]*(P3d2-P3c2)+P3c2
-for i in range(0,(2*N)):
+for i in range(0,(4*N)):
   sourcesP4[i,0] = sourcesP4[i,0]*(P4d1-P4c1)+P4c1
   sourcesP4[i,1] = sourcesP4[i,1]*(P4d2-P4c2)+P4c2
-for i in range(0,(2*N)):
+for i in range(0,(4*N)):
   sourcesP5[i,0] = sourcesP5[i,0]*(P5d1-P5c1)+P5c1
   sourcesP5[i,1] = sourcesP5[i,1]*(P5d2-P5c2)+P5c2
-for i in range(0,(2*N)):
+for i in range(0,(4*N)):
   sourcesP6[i,0] = sourcesP6[i,0]*(P6d1-P6c1)+P6c1
   sourcesP6[i,1] = sourcesP6[i,1]*(P6d2-P6c2)+P6c2
-for i in range(0,(2*N)):
+for i in range(0,(4*N)):
   sourcesP7[i,0] = sourcesP7[i,0]*(P7d1-P7c1)+P7c1
   sourcesP7[i,1] = sourcesP7[i,1]*(P7d2-P7c2)+P7c2
 
@@ -345,77 +342,33 @@ for i in range(0,N):
 # create target
 point = [3.1,3.3]
 
-
-for i in range(0,(2*N)):
-  plt.scatter(sourcesP1[i,0],sourcesP1[i,1],color='black')
-  plt.scatter(sourcesP2[i,0],sourcesP2[i,1],color='red')
-  plt.scatter(sourcesP3[i,0],sourcesP3[i,1],color='blue')
-  plt.scatter(sourcesP4[i,0],sourcesP4[i,1],color='yellow')
-  plt.scatter(sourcesP5[i,0],sourcesP5[i,1],color='black')
-  plt.scatter(sourcesP6[i,0],sourcesP6[i,1],color='red')
-  plt.scatter(sourcesP7[i,0],sourcesP7[i,1],color='blue')
-for i in range(0,N):
-  plt.scatter(sourcesC1[i,0],sourcesC1[i,1],color='yellow')
-  plt.scatter(sourcesC2[i,0],sourcesC2[i,1],color='black')
-  plt.scatter(sourcesC3[i,0],sourcesC3[i,1],color='red')
-  plt.scatter(sourcesC4[i,0],sourcesC4[i,1],color='blue')
-  plt.scatter(sourcesC5[i,0],sourcesC5[i,1],color='yellow')
-  plt.scatter(sourcesC6[i,0],sourcesC6[i,1],color='black')
-  plt.scatter(sourcesC7[i,0],sourcesC7[i,1],color='red')
-  plt.scatter(sourcesC8[i,0],sourcesC8[i,1],color='blue')
-  plt.scatter(sourcesC9[i,0],sourcesC9[i,1],color='yellow')
-  plt.scatter(sourcesC10[i,0],sourcesC10[i,1],color='black')
-  plt.scatter(sourcesC11[i,0],sourcesC11[i,1],color='red')
-  plt.scatter(sourcesC12[i,0],sourcesC12[i,1],color='blue')
-  plt.scatter(sourcesC13[i,0],sourcesC13[i,1],color='yellow')
-  plt.scatter(sourcesC14[i,0],sourcesC14[i,1],color='black')
-  plt.scatter(sourcesC15[i,0],sourcesC15[i,1],color='red')
-  plt.scatter(sourcesC16[i,0],sourcesC16[i,1],color='blue')
-  plt.scatter(sourcesC17[i,0],sourcesC17[i,1],color='yellow')
-  plt.scatter(sourcesC18[i,0],sourcesC18[i,1],color='black')
-  plt.scatter(sourcesC19[i,0],sourcesC19[i,1],color='red')
-  plt.scatter(sourcesC20[i,0],sourcesC20[i,1],color='blue')
-  plt.scatter(sourcesC21[i,0],sourcesC21[i,1],color='yellow')
-  plt.scatter(sourcesC22[i,0],sourcesC22[i,1],color='black')
-  plt.scatter(sourcesC23[i,0],sourcesC23[i,1],color='red')
-  plt.scatter(sourcesC24[i,0],sourcesC24[i,1],color='blue')
-  plt.scatter(sourcesC25[i,0],sourcesC25[i,1],color='yellow')
-  plt.scatter(sourcesC26[i,0],sourcesC26[i,1],color='black')
-  plt.scatter(sourcesC27[i,0],sourcesC27[i,1],color='red')
-  plt.scatter(point[0],point[1],color='green')
-plt.grid()
-plt.show()
-
-
-# create some charge (density) for each source
-# they can be +1 or -1
-# notice how we handle each child box's source charges separately
-sigmaP1 = np.zeros(shape=((2*N),1))
-for i in range(0,(2*N)):
+''' assign charge (+ or - 1) to sources in each int. list box for parent'''
+sigmaP1 = np.zeros(shape=((4*N),1))
+for i in range(0,(4*N)):
   sigmaP1[i] = (np.random.randint(0,2)*2)-1
 
-sigmaP2 = np.zeros(shape=((2*N),1))
-for i in range(0,(2*N)):
+sigmaP2 = np.zeros(shape=((4*N),1))
+for i in range(0,(4*N)):
   sigmaP2[i] = (np.random.randint(0,2)*2)-1
   
-sigmaP3 = np.zeros(shape=((2*N),1))
-for i in range(0,(2*N)):
+sigmaP3 = np.zeros(shape=((4*N),1))
+for i in range(0,(4*N)):
   sigmaP3[i] = (np.random.randint(0,2)*2)-1
 
-sigmaP4 = np.zeros(shape=((2*N),1))
-for i in range(0,(2*N)):
+sigmaP4 = np.zeros(shape=((4*N),1))
+for i in range(0,(4*N)):
   sigmaP4[i] = (np.random.randint(0,2)*2)-1
 
-sigmaP5 = np.zeros(shape=((2*N),1))
-for i in range(0,(2*N)):
+sigmaP5 = np.zeros(shape=((4*N),1))
+for i in range(0,(4*N)):
   sigmaP5[i] = (np.random.randint(0,2)*2)-1
 
-sigmaP6 = np.zeros(shape=((2*N),1))
-for i in range(0,(2*N)):
+sigmaP6 = np.zeros(shape=((4*N),1))
+for i in range(0,(4*N)):
   sigmaP6[i] = (np.random.randint(0,2)*2)-1
 
-sigmaP7 = np.zeros(shape=((2*N),1))
-for i in range(0,(2*N)):
+sigmaP7 = np.zeros(shape=((4*N),1))
+for i in range(0,(4*N)):
   sigmaP7[i] = (np.random.randint(0,2)*2)-1
 
 
@@ -527,48 +480,46 @@ sigmaC27 = np.zeros(shape=(N,1))
 for i in range(0,N):
   sigmaC27[i] = (np.random.randint(0,2)*2)-1
 
-''' these are the weights for each interaction list interaction '''
-
-# each Chebyshev node, m, gets a weight
+''' weights for each interaction list box '''
 def WP1(m1,m2):
   sum = 0
-  for j in range(0,(2*N)):
+  for j in range(0,(4*N)):
     sum += R(n,nodes(n,P1c1,P1d1)[m1],nodes(n,P1c2,P1d2)[m2],sourcesP1[j,0],sourcesP1[j,1],P1c1,P1d1,P1c2,P1d2)*sigmaP1[j]
   return sum
 
 def WP2(m1,m2):
   sum = 0
-  for j in range(0,(2*N)):
+  for j in range(0,(4*N)):
     sum += R(n,nodes(n,P2c1,P2d1)[m1],nodes(n,P2c2,P2d2)[m2],sourcesP2[j,0],sourcesP2[j,1],P2c1,P2d1,P2c2,P2d2)*sigmaP2[j]
   return sum
 
 def WP3(m1,m2):
   sum = 0
-  for j in range(0,(2*N)):
+  for j in range(0,(4*N)):
     sum += R(n,nodes(n,P3c1,P3d1)[m1],nodes(n,P3c2,P3d2)[m2],sourcesP3[j,0],sourcesP3[j,1],P3c1,P3d1,P3c2,P3d2)*sigmaP3[j]
   return sum
 
 def WP4(m1,m2):
   sum = 0
-  for j in range(0,(2*N)):
+  for j in range(0,(4*N)):
     sum += R(n,nodes(n,P4c1,P4d1)[m1],nodes(n,P4c2,P4d2)[m2],sourcesP4[j,0],sourcesP4[j,1],P4c1,P4d1,P4c2,P4d2)*sigmaP4[j]
   return sum
 
 def WP5(m1,m2):
   sum = 0
-  for j in range(0,(2*N)):
+  for j in range(0,(4*N)):
     sum += R(n,nodes(n,P5c1,P5d1)[m1],nodes(n,P5c2,P5d2)[m2],sourcesP5[j,0],sourcesP5[j,1],P5c1,P5d1,P5c2,P5d2)*sigmaP5[j]
   return sum
 
 def WP6(m1,m2):
   sum = 0
-  for j in range(0,(2*N)):
+  for j in range(0,(4*N)):
     sum += R(n,nodes(n,P6c1,P6d1)[m1],nodes(n,P6c2,P6d2)[m2],sourcesP6[j,0],sourcesP6[j,1],P6c1,P6d1,P6c2,P6d2)*sigmaP6[j]
   return sum
 
 def WP7(m1,m2):
   sum = 0
-  for j in range(0,(2*N)):
+  for j in range(0,(4*N)):
     sum += R(n,nodes(n,P7c1,P7d1)[m1],nodes(n,P7c2,P7d2)[m2],sourcesP7[j,0],sourcesP7[j,1],P7c1,P7d1,P7c2,P7d2)*sigmaP7[j]
   return sum
 
@@ -735,7 +686,7 @@ def WC27(m1,m2):
     sum += R(n,nodes(n,C27a1,C27b1)[m1],nodes(n,C27a2,C27b2)[m2],sourcesC27[j,0],sourcesC27[j,1],C27a1,C27b1,C27a2,C27b2)*sigmaC27[j]
   return sum
 
-''' compute multipole to local estimate '''
+''' computes multipole to local estimate for parent and target boxes '''
 def gP(l1,l2):
   sum = 0
   for m1 in range(0,n):
@@ -750,8 +701,7 @@ def gC(l1,l2):
       sum += log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C1a1,C1b1)[m1],nodes(n,C1a2,C1b2)[m2])*WC1(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C2a1,C2b1)[m1],nodes(n,C2a2,C2b2)[m2])*WC2(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C3a1,C3b1)[m1],nodes(n,C3a2,C3b2)[m2])*WC3(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C4a1,C4b1)[m1],nodes(n,C4a2,C4b2)[m2])*WC4(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C5a1,C5b1)[m1],nodes(n,C5a2,C5b2)[m2])*WC5(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C6a1,C6b1)[m1],nodes(n,C6a2,C6b2)[m2])*WC6(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C7a1,C7b1)[m1],nodes(n,C7a2,C7b2)[m2])*WC7(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C8a1,C8b1)[m1],nodes(n,C8a2,C8b2)[m2])*WC8(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C9a1,C9b1)[m1],nodes(n,C9a2,C9b2)[m2])*WC9(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C10a1,C10b1)[m1],nodes(n,C10a2,C10b2)[m2])*WC10(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C11a1,C11b1)[m1],nodes(n,C11a2,C11b2)[m2])*WC11(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C12a1,C12b1)[m1],nodes(n,C12a2,C12b2)[m2])*WC12(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C13a1,C13b1)[m1],nodes(n,C13a2,C13b2)[m2])*WC13(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C14a1,C14b1)[m1],nodes(n,C14a2,C14b2)[m2])*WC14(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C15a1,C15b1)[m1],nodes(n,C15a2,C15b2)[m2])*WC15(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C16a1,C16b1)[m1],nodes(n,C16a2,C16b2)[m2])*WC16(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C17a1,C17b1)[m1],nodes(n,C17a2,C17b2)[m2])*WC17(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C18a1,C18b1)[m1],nodes(n,C18a2,C18b2)[m2])*WC18(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C19a1,C19b1)[m1],nodes(n,C19a2,C19b2)[m2])*WC19(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C20a1,C20b1)[m1],nodes(n,C20a2,C20b2)[m2])*WC20(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C21a1,C21b1)[m1],nodes(n,C21a2,C21b2)[m2])*WC21(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C22a1,C22b1)[m1],nodes(n,C22a2,C22b2)[m2])*WC22(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C23a1,C23b1)[m1],nodes(n,C23a2,C23b2)[m2])*WC23(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C24a1,C24b1)[m1],nodes(n,C24a2,C24b2)[m2])*WC24(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C25a1,C25b1)[m1],nodes(n,C25a2,C25b2)[m2])*WC25(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C26a1,C26b1)[m1],nodes(n,C26a2,C26b2)[m2])*WC26(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C27a1,C27b1)[m1],nodes(n,C27a2,C27b2)[m2])*WC27(m1,m2)
   return sum
 
-''' compute estimate for local expansion '''
-''' note there is no local to local contribution b/c parent has no interaction list '''
+''' estimates local expansion -- note there is no L2L contribution for parent's local exp b/c parent has no interaction list '''
 def f(l1,l2):
   sum = gC(l1,l2)
   for lprime1 in range(0,n):
@@ -759,6 +709,7 @@ def f(l1,l2):
       sum += gP(lprime1,lprime2)*R(n,nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,Pa1,Pb1)[lprime1],nodes(n,Pa2,Pb2)[lprime2],Pa1,Pb1,Pa2,Pb2)
   return sum
 
+''' L2T computation '''
 fest = 0
 for l1 in range(0,n):
   for l2 in range(0,n):
@@ -769,7 +720,7 @@ print(fest)
 
 ''' computation of actual local expansion '''
 fact1 = 0
-for j in range(0,(2*N)):
+for j in range(0,(4*N)):
   fact1 += log2(point[0],point[1],sourcesP1[j,0],sourcesP1[j,1])*sigmaP1[j] + log2(point[0],point[1],sourcesP2[j,0],sourcesP2[j,1])*sigmaP2[j] + log2(point[0],point[1],sourcesP3[j,0],sourcesP3[j,1])*sigmaP3[j] + log2(point[0],point[1],sourcesP4[j,0],sourcesP4[j,1])*sigmaP4[j] + log2(point[0],point[1],sourcesP5[j,0],sourcesP5[j,1])*sigmaP5[j] + log2(point[0],point[1],sourcesP6[j,0],sourcesP6[j,1])*sigmaP6[j] + log2(point[0],point[1],sourcesP7[j,0],sourcesP7[j,1])*sigmaP7[j]
 
 fact2 = 0

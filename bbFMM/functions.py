@@ -1,9 +1,5 @@
 # import necessary packages
 import numpy as np
-import numpy.linalg
-import numpy.matlib
-import matplotlib.pyplot as plt
-from numpy import *
 
 # Chebyshev polynomial function
 def T(n,x,a,b):
