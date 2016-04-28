@@ -3,37 +3,7 @@ import numpy as np
 import numpy.linalg
 import numpy.matlib
 import matplotlib.pyplot as plt
-
-''' define Chebyshev functions and log kernel '''
-
-# Chebyshev polynomial function
-def T(n,x,a,b):
-  return np.cos(n*np.arccos(((2/(b-a))*(x-((a+b)/2)))))
-
-# compute Chebyshev nodes in interval -1,1
-def nodes(n,a,b):
-  nodes = np.zeros(shape=(n,1))
-  for i in range(0,n):
-    nodes[i] = (a+b)/2+ ((b-a)/2)*np.cos(((2*(i+1)-1)*np.pi)/(2*n))
-  return nodes
-
-# define other Chebyshev polynomial function
-def S(n,x,y,a,b):
-  k=1
-  sum=0
-  while k <= (n-1):
-    sum+=T(k,x,a,b)*T(k,y,a,b)
-    k+=1
-  return 1/n + (2/n)*sum
-
-# define multivariable version of above S function
-def R(n,r1,z1,r2,z2,a,b,c,d):
-  return S(n,r1,r2,a,b)*S(n,z1,z2,c,d)
-
-# define log kernel
-def log(r1,z1,r2,z2):
-  return np.log(np.sqrt(np.square(r1-r2)+np.square(z1-z2)))
-
+from functions import *
 
 ''' specify source number and node number '''
 
@@ -92,30 +62,22 @@ def Kest(l1,l2):
   Kest = 0
   for m1 in range(0,n):
     for m2 in range(0,n):
-      Kest += log(nodes(n,c1,d1)[l1],nodes(n,c2,d2)[l2],nodes(n,a1,b1)[m1],nodes(n,a2,b2)[m2])*W(m1,m2)
+      Kest += log2(nodes(n,c1,d1)[l1],nodes(n,c2,d2)[l2],nodes(n,a1,b1)[m1],nodes(n,a2,b2)[m2])*W(m1,m2)
   return Kest
 
-fest1 = 0
+''' L2T contribution '''
+fest = 0
 for l1 in range(0,n):
   for l2 in range(0,n):
-    fest1 += R(n,nodes(n,c1,d1)[l1],nodes(n,c2,d2)[l2],point[0],point[1],c1,d1,c2,d2)*Kest(l1,l2)
+    fest += R(n,nodes(n,c1,d1)[l1],nodes(n,c2,d2)[l2],point[0],point[1],c1,d1,c2,d2)*Kest(l1,l2)
 
-print("Estimated potential 1:")
-print(fest1)
-
-# estimate sum to N of f(x)=K(x,y(j))*sigma[j] by sum to n of K(x,y(m))*W(m)
-fest2 = 0
-for m1 in range(0,n):
-  for m2 in range(0,n):
-    fest2 += log(point[0],point[1],nodes(n,a1,b1)[m1],nodes(n,a2,b2)[m2])*W(m1,m2)
-
-print("Estimated potential 2:")
-print(fest2)
+print("Estimated potential:")
+print(fest)
 
 # compute actual sum to N of f(x)=K(x,y(j))*sigma[j]
 fact = 0
 for j in range(0,N):
-  fact += log(point[0],point[1],sources[j,0],sources[j,1])*sigma[j]
+  fact += log2(point[0],point[1],sources[j,0],sources[j,1])*sigma[j]
 
 print("Actual potential:")
 print(fact)

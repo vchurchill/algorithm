@@ -3,58 +3,29 @@ import numpy as np
 import numpy.linalg
 import numpy.matlib
 import matplotlib.pyplot as plt
+from functions import *
 
-''' define Chebyshev functions and log kernel '''
-
-# Chebyshev polynomial function
-def T(n,x,a,b):
-  return np.cos(n*np.arccos(((2/(b-a))*(x-((a+b)/2)))))
-
-# compute Chebyshev nodes in interval -1,1
-def nodes(n,a,b):
-  nodes = np.zeros(shape=(n,1))
-  for i in range(0,n):
-    nodes[i] = (a+b)/2+ ((b-a)/2)*np.cos(((2*(i+1)-1)*np.pi)/(2*n))
-  return nodes
-
-# define other Chebyshev polynomial function
-def S(n,x,y,a,b):
-  k=1
-  sum=0
-  while k <= (n-1):
-    sum+=T(k,x,a,b)*T(k,y,a,b)
-    k+=1
-  return 1/n + (2/n)*sum
-
-# define multivariable version of above S function
-def R(n,r1,z1,r2,z2,a,b,c,d):
-  return S(n,r1,r2,a,b)*S(n,z1,z2,c,d)
-
-# define log kernel
-def log(r1,z1,r2,z2):
-  return np.log(np.sqrt(np.square(r1-r2)+np.square(z1-z2)))
-
-''' specify source number and node number '''
+''' specify number of sources per box and number of nodes per interval '''
 
 # N is the number of sources in each interval
 N = 1
 
 # n is the number of Chebyshev nodes in each interval
 # n^2 interpolation points in each box
-n=5
+n=6
 
-''' specify source interval '''
-# parent box
-Pa1 = 2
-Pb1 = 4
-Pa2 = 2
-Pb2 = 4
-
+''' specify boxes '''
 # target box
 a1 = 3
 b1 = 4
 a2 = 3
 b2 = 4
+
+# parent box
+Pa1 = 2
+Pb1 = 4
+Pa2 = 2
+Pb2 = 4
 
 # parent interaction list boxes
 P1c1 = 0
@@ -769,14 +740,14 @@ def gP(l1,l2):
   sum = 0
   for m1 in range(0,n):
     for m2 in range(0,n):
-      sum += log(nodes(n,Pa1,Pb1)[l1],nodes(n,Pa2,Pb2)[l2],nodes(n,P1c1,P1d1)[m1],nodes(n,P1c2,P1d2)[m2])*WP1(m1,m2) + log(nodes(n,Pa1,Pb1)[l1],nodes(n,Pa2,Pb2)[l2],nodes(n,P2c1,P2d1)[m1],nodes(n,P2c2,P2d2)[m2])*WP2(m1,m2) + log(nodes(n,Pa1,Pb1)[l1],nodes(n,Pa2,Pb2)[l2],nodes(n,P3c1,P3d1)[m1],nodes(n,P3c2,P3d2)[m2])*WP3(m1,m2) + log(nodes(n,Pa1,Pb1)[l1],nodes(n,Pa2,Pb2)[l2],nodes(n,P4c1,P4d1)[m1],nodes(n,P4c2,P4d2)[m2])*WP4(m1,m2) + log(nodes(n,Pa1,Pb1)[l1],nodes(n,Pa2,Pb2)[l2],nodes(n,P5c1,P5d1)[m1],nodes(n,P5c2,P5d2)[m2])*WP5(m1,m2) + log(nodes(n,Pa1,Pb1)[l1],nodes(n,Pa2,Pb2)[l2],nodes(n,P6c1,P6d1)[m1],nodes(n,P6c2,P6d2)[m2])*WP6(m1,m2) + log(nodes(n,Pa1,Pb1)[l1],nodes(n,Pa2,Pb2)[l2],nodes(n,P7c1,P7d1)[m1],nodes(n,P7c2,P7d2)[m2])*WP7(m1,m2)
+      sum += log2(nodes(n,Pa1,Pb1)[l1],nodes(n,Pa2,Pb2)[l2],nodes(n,P1c1,P1d1)[m1],nodes(n,P1c2,P1d2)[m2])*WP1(m1,m2) + log2(nodes(n,Pa1,Pb1)[l1],nodes(n,Pa2,Pb2)[l2],nodes(n,P2c1,P2d1)[m1],nodes(n,P2c2,P2d2)[m2])*WP2(m1,m2) + log2(nodes(n,Pa1,Pb1)[l1],nodes(n,Pa2,Pb2)[l2],nodes(n,P3c1,P3d1)[m1],nodes(n,P3c2,P3d2)[m2])*WP3(m1,m2) + log2(nodes(n,Pa1,Pb1)[l1],nodes(n,Pa2,Pb2)[l2],nodes(n,P4c1,P4d1)[m1],nodes(n,P4c2,P4d2)[m2])*WP4(m1,m2) + log2(nodes(n,Pa1,Pb1)[l1],nodes(n,Pa2,Pb2)[l2],nodes(n,P5c1,P5d1)[m1],nodes(n,P5c2,P5d2)[m2])*WP5(m1,m2) + log2(nodes(n,Pa1,Pb1)[l1],nodes(n,Pa2,Pb2)[l2],nodes(n,P6c1,P6d1)[m1],nodes(n,P6c2,P6d2)[m2])*WP6(m1,m2) + log2(nodes(n,Pa1,Pb1)[l1],nodes(n,Pa2,Pb2)[l2],nodes(n,P7c1,P7d1)[m1],nodes(n,P7c2,P7d2)[m2])*WP7(m1,m2)
   return sum
 
 def gC(l1,l2):
   sum = 0
   for m1 in range(0,n):
     for m2 in range(0,n):
-      sum += log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C1a1,C1b1)[m1],nodes(n,C1a2,C1b2)[m2])*WC1(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C2a1,C2b1)[m1],nodes(n,C2a2,C2b2)[m2])*WC2(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C3a1,C3b1)[m1],nodes(n,C3a2,C3b2)[m2])*WC3(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C4a1,C4b1)[m1],nodes(n,C4a2,C4b2)[m2])*WC4(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C5a1,C5b1)[m1],nodes(n,C5a2,C5b2)[m2])*WC5(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C6a1,C6b1)[m1],nodes(n,C6a2,C6b2)[m2])*WC6(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C7a1,C7b1)[m1],nodes(n,C7a2,C7b2)[m2])*WC7(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C8a1,C8b1)[m1],nodes(n,C8a2,C8b2)[m2])*WC8(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C9a1,C9b1)[m1],nodes(n,C9a2,C9b2)[m2])*WC9(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C10a1,C10b1)[m1],nodes(n,C10a2,C10b2)[m2])*WC10(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C11a1,C11b1)[m1],nodes(n,C11a2,C11b2)[m2])*WC11(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C12a1,C12b1)[m1],nodes(n,C12a2,C12b2)[m2])*WC12(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C13a1,C13b1)[m1],nodes(n,C13a2,C13b2)[m2])*WC13(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C14a1,C14b1)[m1],nodes(n,C14a2,C14b2)[m2])*WC14(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C15a1,C15b1)[m1],nodes(n,C15a2,C15b2)[m2])*WC15(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C16a1,C16b1)[m1],nodes(n,C16a2,C16b2)[m2])*WC16(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C17a1,C17b1)[m1],nodes(n,C17a2,C17b2)[m2])*WC17(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C18a1,C18b1)[m1],nodes(n,C18a2,C18b2)[m2])*WC18(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C19a1,C19b1)[m1],nodes(n,C19a2,C19b2)[m2])*WC19(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C20a1,C20b1)[m1],nodes(n,C20a2,C20b2)[m2])*WC20(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C21a1,C21b1)[m1],nodes(n,C21a2,C21b2)[m2])*WC21(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C22a1,C22b1)[m1],nodes(n,C22a2,C22b2)[m2])*WC22(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C23a1,C23b1)[m1],nodes(n,C23a2,C23b2)[m2])*WC23(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C24a1,C24b1)[m1],nodes(n,C24a2,C24b2)[m2])*WC24(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C25a1,C25b1)[m1],nodes(n,C25a2,C25b2)[m2])*WC25(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C26a1,C26b1)[m1],nodes(n,C26a2,C26b2)[m2])*WC26(m1,m2) + log(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C27a1,C27b1)[m1],nodes(n,C27a2,C27b2)[m2])*WC27(m1,m2)
+      sum += log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C1a1,C1b1)[m1],nodes(n,C1a2,C1b2)[m2])*WC1(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C2a1,C2b1)[m1],nodes(n,C2a2,C2b2)[m2])*WC2(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C3a1,C3b1)[m1],nodes(n,C3a2,C3b2)[m2])*WC3(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C4a1,C4b1)[m1],nodes(n,C4a2,C4b2)[m2])*WC4(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C5a1,C5b1)[m1],nodes(n,C5a2,C5b2)[m2])*WC5(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C6a1,C6b1)[m1],nodes(n,C6a2,C6b2)[m2])*WC6(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C7a1,C7b1)[m1],nodes(n,C7a2,C7b2)[m2])*WC7(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C8a1,C8b1)[m1],nodes(n,C8a2,C8b2)[m2])*WC8(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C9a1,C9b1)[m1],nodes(n,C9a2,C9b2)[m2])*WC9(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C10a1,C10b1)[m1],nodes(n,C10a2,C10b2)[m2])*WC10(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C11a1,C11b1)[m1],nodes(n,C11a2,C11b2)[m2])*WC11(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C12a1,C12b1)[m1],nodes(n,C12a2,C12b2)[m2])*WC12(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C13a1,C13b1)[m1],nodes(n,C13a2,C13b2)[m2])*WC13(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C14a1,C14b1)[m1],nodes(n,C14a2,C14b2)[m2])*WC14(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C15a1,C15b1)[m1],nodes(n,C15a2,C15b2)[m2])*WC15(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C16a1,C16b1)[m1],nodes(n,C16a2,C16b2)[m2])*WC16(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C17a1,C17b1)[m1],nodes(n,C17a2,C17b2)[m2])*WC17(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C18a1,C18b1)[m1],nodes(n,C18a2,C18b2)[m2])*WC18(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C19a1,C19b1)[m1],nodes(n,C19a2,C19b2)[m2])*WC19(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C20a1,C20b1)[m1],nodes(n,C20a2,C20b2)[m2])*WC20(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C21a1,C21b1)[m1],nodes(n,C21a2,C21b2)[m2])*WC21(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C22a1,C22b1)[m1],nodes(n,C22a2,C22b2)[m2])*WC22(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C23a1,C23b1)[m1],nodes(n,C23a2,C23b2)[m2])*WC23(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C24a1,C24b1)[m1],nodes(n,C24a2,C24b2)[m2])*WC24(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C25a1,C25b1)[m1],nodes(n,C25a2,C25b2)[m2])*WC25(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C26a1,C26b1)[m1],nodes(n,C26a2,C26b2)[m2])*WC26(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,C27a1,C27b1)[m1],nodes(n,C27a2,C27b2)[m2])*WC27(m1,m2)
   return sum
 
 ''' compute estimate for local expansion '''
@@ -799,11 +770,11 @@ print(fest)
 ''' computation of actual local expansion '''
 fact1 = 0
 for j in range(0,(2*N)):
-  fact1 += log(point[0],point[1],sourcesP1[j,0],sourcesP1[j,1])*sigmaP1[j] + log(point[0],point[1],sourcesP2[j,0],sourcesP2[j,1])*sigmaP2[j] + log(point[0],point[1],sourcesP3[j,0],sourcesP3[j,1])*sigmaP3[j] + log(point[0],point[1],sourcesP4[j,0],sourcesP4[j,1])*sigmaP4[j] + log(point[0],point[1],sourcesP5[j,0],sourcesP5[j,1])*sigmaP5[j] + log(point[0],point[1],sourcesP6[j,0],sourcesP6[j,1])*sigmaP6[j] + log(point[0],point[1],sourcesP7[j,0],sourcesP7[j,1])*sigmaP7[j]
+  fact1 += log2(point[0],point[1],sourcesP1[j,0],sourcesP1[j,1])*sigmaP1[j] + log2(point[0],point[1],sourcesP2[j,0],sourcesP2[j,1])*sigmaP2[j] + log2(point[0],point[1],sourcesP3[j,0],sourcesP3[j,1])*sigmaP3[j] + log2(point[0],point[1],sourcesP4[j,0],sourcesP4[j,1])*sigmaP4[j] + log2(point[0],point[1],sourcesP5[j,0],sourcesP5[j,1])*sigmaP5[j] + log2(point[0],point[1],sourcesP6[j,0],sourcesP6[j,1])*sigmaP6[j] + log2(point[0],point[1],sourcesP7[j,0],sourcesP7[j,1])*sigmaP7[j]
 
 fact2 = 0
 for j in range(0,N):
-  fact2 += log(point[0],point[1],sourcesC1[j,0],sourcesC1[j,1])*sigmaC1[j] + log(point[0],point[1],sourcesC2[j,0],sourcesC2[j,1])*sigmaC2[j] + log(point[0],point[1],sourcesC3[j,0],sourcesC3[j,1])*sigmaC3[j] + log(point[0],point[1],sourcesC4[j,0],sourcesC4[j,1])*sigmaC4[j] + log(point[0],point[1],sourcesC5[j,0],sourcesC5[j,1])*sigmaC5[j] + log(point[0],point[1],sourcesC6[j,0],sourcesC6[j,1])*sigmaC6[j] + log(point[0],point[1],sourcesC7[j,0],sourcesC7[j,1])*sigmaC7[j] + log(point[0],point[1],sourcesC8[j,0],sourcesC8[j,1])*sigmaC8[j] + log(point[0],point[1],sourcesC9[j,0],sourcesC9[j,1])*sigmaC9[j] + log(point[0],point[1],sourcesC10[j,0],sourcesC10[j,1])*sigmaC10[j] + log(point[0],point[1],sourcesC11[j,0],sourcesC11[j,1])*sigmaC11[j] + log(point[0],point[1],sourcesC12[j,0],sourcesC12[j,1])*sigmaC12[j] + log(point[0],point[1],sourcesC13[j,0],sourcesC13[j,1])*sigmaC13[j] + log(point[0],point[1],sourcesC14[j,0],sourcesC14[j,1])*sigmaC14[j] + log(point[0],point[1],sourcesC15[j,0],sourcesC15[j,1])*sigmaC15[j] + log(point[0],point[1],sourcesC16[j,0],sourcesC16[j,1])*sigmaC16[j] + log(point[0],point[1],sourcesC17[j,0],sourcesC17[j,1])*sigmaC17[j] + log(point[0],point[1],sourcesC18[j,0],sourcesC18[j,1])*sigmaC18[j] + log(point[0],point[1],sourcesC19[j,0],sourcesC19[j,1])*sigmaC19[j] + log(point[0],point[1],sourcesC20[j,0],sourcesC20[j,1])*sigmaC20[j] + log(point[0],point[1],sourcesC21[j,0],sourcesC21[j,1])*sigmaC21[j] + log(point[0],point[1],sourcesC22[j,0],sourcesC22[j,1])*sigmaC22[j] + log(point[0],point[1],sourcesC23[j,0],sourcesC23[j,1])*sigmaC23[j] + log(point[0],point[1],sourcesC24[j,0],sourcesC24[j,1])*sigmaC24[j] + log(point[0],point[1],sourcesC25[j,0],sourcesC25[j,1])*sigmaC25[j] + log(point[0],point[1],sourcesC26[j,0],sourcesC26[j,1])*sigmaC26[j] + log(point[0],point[1],sourcesC27[j,0],sourcesC27[j,1])*sigmaC27[j]
+  fact2 += log2(point[0],point[1],sourcesC1[j,0],sourcesC1[j,1])*sigmaC1[j] + log2(point[0],point[1],sourcesC2[j,0],sourcesC2[j,1])*sigmaC2[j] + log2(point[0],point[1],sourcesC3[j,0],sourcesC3[j,1])*sigmaC3[j] + log2(point[0],point[1],sourcesC4[j,0],sourcesC4[j,1])*sigmaC4[j] + log2(point[0],point[1],sourcesC5[j,0],sourcesC5[j,1])*sigmaC5[j] + log2(point[0],point[1],sourcesC6[j,0],sourcesC6[j,1])*sigmaC6[j] + log2(point[0],point[1],sourcesC7[j,0],sourcesC7[j,1])*sigmaC7[j] + log2(point[0],point[1],sourcesC8[j,0],sourcesC8[j,1])*sigmaC8[j] + log2(point[0],point[1],sourcesC9[j,0],sourcesC9[j,1])*sigmaC9[j] + log2(point[0],point[1],sourcesC10[j,0],sourcesC10[j,1])*sigmaC10[j] + log2(point[0],point[1],sourcesC11[j,0],sourcesC11[j,1])*sigmaC11[j] + log2(point[0],point[1],sourcesC12[j,0],sourcesC12[j,1])*sigmaC12[j] + log2(point[0],point[1],sourcesC13[j,0],sourcesC13[j,1])*sigmaC13[j] + log2(point[0],point[1],sourcesC14[j,0],sourcesC14[j,1])*sigmaC14[j] + log2(point[0],point[1],sourcesC15[j,0],sourcesC15[j,1])*sigmaC15[j] + log2(point[0],point[1],sourcesC16[j,0],sourcesC16[j,1])*sigmaC16[j] + log2(point[0],point[1],sourcesC17[j,0],sourcesC17[j,1])*sigmaC17[j] + log2(point[0],point[1],sourcesC18[j,0],sourcesC18[j,1])*sigmaC18[j] + log2(point[0],point[1],sourcesC19[j,0],sourcesC19[j,1])*sigmaC19[j] + log2(point[0],point[1],sourcesC20[j,0],sourcesC20[j,1])*sigmaC20[j] + log2(point[0],point[1],sourcesC21[j,0],sourcesC21[j,1])*sigmaC21[j] + log2(point[0],point[1],sourcesC22[j,0],sourcesC22[j,1])*sigmaC22[j] + log2(point[0],point[1],sourcesC23[j,0],sourcesC23[j,1])*sigmaC23[j] + log2(point[0],point[1],sourcesC24[j,0],sourcesC24[j,1])*sigmaC24[j] + log2(point[0],point[1],sourcesC25[j,0],sourcesC25[j,1])*sigmaC25[j] + log2(point[0],point[1],sourcesC26[j,0],sourcesC26[j,1])*sigmaC26[j] + log2(point[0],point[1],sourcesC27[j,0],sourcesC27[j,1])*sigmaC27[j]
 
 fact = fact1 + fact2
 

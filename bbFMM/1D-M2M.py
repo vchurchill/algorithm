@@ -3,32 +3,7 @@ import numpy as np
 import numpy.linalg
 import numpy.matlib
 import matplotlib.pyplot as plt
-
-''' define Chebyshev functions and log kernel '''
-
-# Chebyshev polynomial function
-def T(n,x,a,b):
-  return np.cos(n*np.arccos(((2/(b-a))*(x-((a+b)/2)))))
-
-# compute Chebyshev nodes in interval -1,1
-def nodes(n,a,b):
-  nodes = np.zeros(shape=(n,1))
-  for i in range(0,n):
-    nodes[i] = (a+b)/2+ ((b-a)/2)*np.cos(((2*(i+1)-1)*np.pi)/(2*n))
-  return nodes
-
-# define other Chebyshev polynomial function
-def S(n,x,y,a,b):
-  k=1
-  sum=0
-  while k <= (n-1):
-    sum+=T(k,x,a,b)*T(k,y,a,b)
-    k+=1
-  return 1/n + (2/n)*sum
-
-# define log kernel
-def log(r,z):
-  return np.log(np.fabs(r-z))
+from functions import *
 
 ''' specify source number and node number '''
 
