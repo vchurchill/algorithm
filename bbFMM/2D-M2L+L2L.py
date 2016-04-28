@@ -44,19 +44,19 @@ N = 1
 n=5
 
 ''' specify source interval '''
-# parent interval
+# parent box
 Pa1 = 2
 Pb1 = 4
 Pa2 = 2
 Pb2 = 4
 
-# Target interval
+# target box
 a1 = 3
 b1 = 4
 a2 = 3
 b2 = 4
 
-# parent interaction list intervals
+# parent interaction list boxes
 P1c1 = 0
 P1d1 = 2
 P1c2 = 6
@@ -92,7 +92,7 @@ P7d1 = 8
 P7c2 = 0
 P7d2 = 2
 
-# child interaction list intervals
+# target interaction list boxes
 C1a1 = 0
 C1b1 = 1
 C1a2 = 0
