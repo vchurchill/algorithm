@@ -54,7 +54,7 @@ def f(l1,l2):
       sum += log2(nodes(n,c1,d1)[l1],nodes(n,c2,d2)[l2],nodes(n,a1,b1)[m1],nodes(n,a2,b2)[m2])*W(m1,m2)
   return sum
 
-''' compute potential f at target by interpolation '''
+''' compute potential f at target by interpolation (L2T) '''
 fest = 0
 for l1 in range(0,n):
   for l2 in range(0,n):

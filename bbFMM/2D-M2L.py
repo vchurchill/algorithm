@@ -9,7 +9,7 @@ N = 3
 
 # n is the number of Chebyshev nodes in each interval
 # n^2 interpolation points in each box
-n=5
+n=8
 
 ''' define boxes '''
 # target box
