@@ -133,19 +133,7 @@ for i in range(0,N):
 for i in range(0,N):
   sourcesP7[i,0] = sourcesP7[i,0]*(P7d1-P7c1)+P7c1
   sourcesP7[i,1] = sourcesP7[i,1]*(P7d2-P7c2)+P7c2
-'''
-for i in range(0,N):
-  plt.scatter(sourcesP1[i,0],sourcesP1[i,1],color='black')
-  plt.scatter(sourcesP2[i,0],sourcesP2[i,1],color='red')
-  plt.scatter(sourcesP3[i,0],sourcesP3[i,1],color='blue')
-  plt.scatter(sourcesP4[i,0],sourcesP4[i,1],color='yellow')
-  plt.scatter(sourcesP5[i,0],sourcesP5[i,1],color='black')
-  plt.scatter(sourcesP6[i,0],sourcesP6[i,1],color='red')
-  plt.scatter(sourcesP7[i,0],sourcesP7[i,1],color='blue')
-  plt.scatter(point[0],point[1],color='green')
-plt.grid()
-plt.show()
-'''
+
 ''' assign charge (+ or - 1) to sources in each int. list box for parent'''
 sigmaP1 = np.zeros(shape=(N,1))
 for i in range(0,N):
