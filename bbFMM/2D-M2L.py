@@ -54,6 +54,41 @@ I7d1 = 8
 I7c2 = 0
 I7d2 = 2
 
+nt1 = np.zeros(shape=(n,1))
+nt2 = np.zeros(shape=(n,1))
+nc11 = np.zeros(shape=(n,1))
+nc12 = np.zeros(shape=(n,1))
+nc21 = np.zeros(shape=(n,1))
+nc22 = np.zeros(shape=(n,1))
+nc31 = np.zeros(shape=(n,1))
+nc32 = np.zeros(shape=(n,1))
+nc41 = np.zeros(shape=(n,1))
+nc42 = np.zeros(shape=(n,1))
+nc51 = np.zeros(shape=(n,1))
+nc52 = np.zeros(shape=(n,1))
+nc61 = np.zeros(shape=(n,1))
+nc62 = np.zeros(shape=(n,1))
+nc71 = np.zeros(shape=(n,1))
+nc72 = np.zeros(shape=(n,1))
+
+for i in range(0,n):
+  nt1[i] = nodes(n,a1,b1)[i]
+  nt2[i] = nodes(n,a2,b2)[i]
+  nc11[i] = nodes(n,I1c1,I1d1)[i]
+  nc12[i] = nodes(n,I1c2,I1d2)[i]
+  nc21[i] = nodes(n,I2c1,I2d1)[i]
+  nc22[i] = nodes(n,I2c2,I2d2)[i]
+  nc31[i] = nodes(n,I3c1,I3d1)[i]
+  nc32[i] = nodes(n,I3c2,I3d2)[i]
+  nc41[i] = nodes(n,I4c1,I4d1)[i]
+  nc42[i] = nodes(n,I4c2,I4d2)[i]
+  nc51[i] = nodes(n,I5c1,I5d1)[i]
+  nc52[i] = nodes(n,I5c2,I5d2)[i]
+  nc61[i] = nodes(n,I6c1,I6d1)[i]
+  nc62[i] = nodes(n,I6c2,I6d2)[i]
+  nc71[i] = nodes(n,I7c1,I7d1)[i]
+  nc72[i] = nodes(n,I7c2,I7d2)[i]
+
 ''' populate boxes '''
 # create target
 point = [3.7,3.8]
@@ -121,43 +156,43 @@ for i in range(0,N):
 def WI1(m1,m2):
   sum = 0
   for j in range(0,N):
-    sum += R(n,nodes(n,I1c1,I1d1)[m1],nodes(n,I1c2,I1d2)[m2],sourcesI1[j,0],sourcesI1[j,1],I1c1,I1d1,I1c2,I1d2)*sigmaI1[j]
+    sum += R(n,nc11[m1],nc12[m2],sourcesI1[j,0],sourcesI1[j,1],I1c1,I1d1,I1c2,I1d2)*sigmaI1[j]
   return sum
 
 def WI2(m1,m2):
   sum = 0
   for j in range(0,N):
-    sum += R(n,nodes(n,I2c1,I2d1)[m1],nodes(n,I2c2,I2d2)[m2],sourcesI2[j,0],sourcesI2[j,1],I2c1,I2d1,I2c2,I2d2)*sigmaI2[j]
+    sum += R(n,nc21[m1],nc22[m2],sourcesI2[j,0],sourcesI2[j,1],I2c1,I2d1,I2c2,I2d2)*sigmaI2[j]
   return sum
 
 def WI3(m1,m2):
   sum = 0
   for j in range(0,N):
-    sum += R(n,nodes(n,I3c1,I3d1)[m1],nodes(n,I3c2,I3d2)[m2],sourcesI3[j,0],sourcesI3[j,1],I3c1,I3d1,I3c2,I3d2)*sigmaI3[j]
+    sum += R(n,nc31[m1],nc32[m2],sourcesI3[j,0],sourcesI3[j,1],I3c1,I3d1,I3c2,I3d2)*sigmaI3[j]
   return sum
 
 def WI4(m1,m2):
   sum = 0
   for j in range(0,N):
-    sum += R(n,nodes(n,I4c1,I4d1)[m1],nodes(n,I4c2,I4d2)[m2],sourcesI4[j,0],sourcesI4[j,1],I4c1,I4d1,I4c2,I4d2)*sigmaI4[j]
+    sum += R(n,nc41[m1],nc42[m2],sourcesI4[j,0],sourcesI4[j,1],I4c1,I4d1,I4c2,I4d2)*sigmaI4[j]
   return sum
 
 def WI5(m1,m2):
   sum = 0
   for j in range(0,N):
-    sum += R(n,nodes(n,I5c1,I5d1)[m1],nodes(n,I5c2,I5d2)[m2],sourcesI5[j,0],sourcesI5[j,1],I5c1,I5d1,I5c2,I5d2)*sigmaI5[j]
+    sum += R(n,nc51[m1],nc52[m2],sourcesI5[j,0],sourcesI5[j,1],I5c1,I5d1,I5c2,I5d2)*sigmaI5[j]
   return sum
 
 def WI6(m1,m2):
   sum = 0
   for j in range(0,N):
-    sum += R(n,nodes(n,I6c1,I6d1)[m1],nodes(n,I6c2,I6d2)[m2],sourcesI6[j,0],sourcesI6[j,1],I6c1,I6d1,I6c2,I6d2)*sigmaI6[j]
+    sum += R(n,nc61[m1],nc62[m2],sourcesI6[j,0],sourcesI6[j,1],I6c1,I6d1,I6c2,I6d2)*sigmaI6[j]
   return sum
 
 def WI7(m1,m2):
   sum = 0
   for j in range(0,N):
-    sum += R(n,nodes(n,I7c1,I7d1)[m1],nodes(n,I7c2,I7d2)[m2],sourcesI7[j,0],sourcesI7[j,1],I7c1,I7d1,I7c2,I7d2)*sigmaI7[j]
+    sum += R(n,nc71[m1],nc72[m2],sourcesI7[j,0],sourcesI7[j,1],I7c1,I7d1,I7c2,I7d2)*sigmaI7[j]
   return sum
 
 ''' M2L contribution. in this case this is the whole local exp. since 
@@ -166,14 +201,14 @@ def g(l1,l2):
   sum = 0
   for m1 in range(0,n):
     for m2 in range(0,n):
-      sum += log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,I1c1,I1d1)[m1],nodes(n,I1c2,I1d2)[m2])*WI1(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,I2c1,I2d1)[m1],nodes(n,I2c2,I2d2)[m2])*WI2(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,I3c1,I3d1)[m1],nodes(n,I3c2,I3d2)[m2])*WI3(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,I4c1,I4d1)[m1],nodes(n,I4c2,I4d2)[m2])*WI4(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,I5c1,I5d1)[m1],nodes(n,I5c2,I5d2)[m2])*WI5(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,I6c1,I6d1)[m1],nodes(n,I6c2,I6d2)[m2])*WI6(m1,m2) + log2(nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],nodes(n,I7c1,I7d1)[m1],nodes(n,I7c2,I7d2)[m2])*WI7(m1,m2)
+      sum += log2(nt1[l1],nt2[l2],nc11[m1],nc12[m2])*WI1(m1,m2) + log2(nt1[l1],nt2[l2],nc21[m1],nc22[m2])*WI2(m1,m2) + log2(nt1[l1],nt2[l2],nc31[m1],nc32[m2])*WI3(m1,m2) + log2(nt1[l1],nt2[l2],nc41[m1],nc42[m2])*WI4(m1,m2) + log2(nt1[l1],nt2[l2],nc51[m1],nc52[m2])*WI5(m1,m2) + log2(nt1[l1],nt2[l2],nc61[m1],nc62[m2])*WI6(m1,m2) + log2(nt1[l1],nt2[l2],nc71[m1],nc72[m2])*WI7(m1,m2)
   return sum
 
 ''' L2T computation '''
 fest = 0
 for l1 in range(0,n):
   for l2 in range(0,n):
-    fest += g(l1,l2)*R(n,nodes(n,a1,b1)[l1],nodes(n,a2,b2)[l2],point[0],point[1],a1,b1,a2,b2)
+    fest += g(l1,l2)*R(n,nt1[l1],nt2[l2],point[0],point[1],a1,b1,a2,b2)
 
 print("Estimated potential:")
 print(fest)

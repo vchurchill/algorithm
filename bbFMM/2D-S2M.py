@@ -24,6 +24,16 @@ d1 = 6
 c2 = 4
 d2 = 6
 
+ns1 = np.zeros(shape=(n,1))
+nt1 = np.zeros(shape=(n,1))
+ns2 = np.zeros(shape=(n,1))
+nt2 = np.zeros(shape=(n,1))
+for i in range(0,n):
+  ns1[i] = nodes(n,a1,b1)[i]
+  ns2[i] = nodes(n,a2,b2)[i]
+  nt1[i] = nodes(n,c1,d1)[i]
+  nt2[i] = nodes(n,c2,d2)[i]
+
 ''' populate boxes '''
 # target
 point = [4.1,4.3]
@@ -43,7 +53,7 @@ for i in range(0,N):
 def W(m1,m2):
   sum = 0
   for j in range(0,N):
-    sum += R(n,nodes(n,a1,b1)[m1],nodes(n,a2,b2)[m2],sources[j,0],sources[j,1],a1,b1,a2,b2)*sigma[j]
+    sum += R(n,ns1[m1],ns2[m2],sources[j,0],sources[j,1],a1,b1,a2,b2)*sigma[j]
   return sum
 
 ''' estimates potential f at Chebyshev nodes '''
@@ -51,14 +61,14 @@ def f(l1,l2):
   sum = 0
   for m1 in range(0,n):
     for m2 in range(0,n):
-      sum += log2(nodes(n,c1,d1)[l1],nodes(n,c2,d2)[l2],nodes(n,a1,b1)[m1],nodes(n,a2,b2)[m2])*W(m1,m2)
+      sum += log2(nt1[l1],nt2[l2],ns1[m1],ns2[m2])*W(m1,m2)
   return sum
 
 ''' compute potential f at target by interpolation (L2T) '''
 fest = 0
 for l1 in range(0,n):
   for l2 in range(0,n):
-    fest += f(l1,l2)*R(n,nodes(n,c1,d1)[l1],nodes(n,c2,d2)[l2],point[0],point[1],c1,d1,c2,d2)
+    fest += f(l1,l2)*R(n,nt1[l1],nt2[l2],point[0],point[1],c1,d1,c2,d2)
 
 print("Estimated potential:")
 print(fest)
